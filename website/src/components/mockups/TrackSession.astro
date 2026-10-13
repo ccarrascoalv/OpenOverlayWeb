@@ -1,0 +1,129 @@
+---
+import { useT } from '../../i18n';
+const t = useT(Astro.currentLocale);
+
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: cls, style } = Astro.props;
+const m = t.mock.track;
+---
+
+<div class:list={['ts-wrap', cls]} style={style}>
+<div class="ts" data-mock="track">
+  <span class="ts-item ts-circuit"><span class="ts-live" aria-hidden="true"></span>{m.circuit}</span>
+  <span class="ts-item ts-session">{m.session}</span>
+  <span class="ts-item ts-temp"><small>{m.trackTemp}</small>31 °C</span>
+  <span class="ts-item ts-temp"><small>{m.airTemp}</small>19 °C</span>
+  <span class="ts-item ts-opt">
+    <small>{m.wind}</small>
+    <svg class="ts-wind" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1 9.5 10 6 8 2.5 10Z" fill="currentColor"></path></svg>
+    12 km/h
+  </span>
+  <span class="ts-item ts-opt"><small>{m.humidity}</small>{m.humidityValue}</span>
+  <span class="ts-item ts-opt2"><small>{m.rubber}</small>{m.rubberValue}</span>
+  <span class="ts-item"><small>{m.remaining}</small><span data-track="clock">00:42:18</span></span>
+  <span class="ts-item ts-lap"><small>{m.lap}</small><span data-track="lap">14</span></span>
+</div>
+</div>
+
+<style>
+  .ts-wrap {
+    container-type: inline-size;
+    min-width: 0;
+  }
+
+  .ts {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    overflow: hidden;
+    background: var(--c-glass);
+    border: 1px solid var(--c-border-soft);
+    border-radius: var(--radius-2);
+    box-shadow: 0 18px 40px -18px var(--c-shadow);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .ts-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    padding: 0.42rem 0.75rem;
+  }
+
+  .ts-item + .ts-item {
+    border-left: 1px solid var(--c-border-soft);
+  }
+
+  .ts-item small {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-text-3);
+  }
+
+  .ts-circuit {
+    align-items: center;
+  }
+
+  .ts-live {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-live);
+    box-shadow: 0 0 0 3px var(--c-live-soft);
+  }
+
+  .ts-session {
+    color: var(--c-text-2);
+  }
+
+  .ts-wind {
+    width: 0.75rem;
+    height: 0.75rem;
+    align-self: center;
+    color: var(--c-text-2);
+    transform: rotate(-35deg);
+  }
+
+  @container (max-width: 920px) {
+    .ts-opt2 {
+      display: none;
+    }
+  }
+
+  @container (max-width: 740px) {
+    .ts-opt {
+      display: none;
+    }
+  }
+
+  @container (max-width: 580px) {
+    .ts-session {
+      display: none;
+    }
+  }
+
+  @container (max-width: 360px) {
+    .ts-lap {
+      display: none;
+    }
+  }
+
+  @container (max-width: 450px) {
+    .ts-temp {
+      display: none;
+    }
+    .ts-circuit {
+      margin-right: auto;
+    }
+  }
+</style>

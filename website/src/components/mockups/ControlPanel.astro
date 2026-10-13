@@ -1,0 +1,300 @@
+---
+// Ilustración del Panel de control (no es una captura): barra lateral, cabecera, vista previa y ajustes.
+import { useT } from '../../i18n';
+const t = useT(Astro.currentLocale);
+const m = t.panel.mock;
+const previewRows = t.mock.relative.rows;
+const fmt = (gap: number) => (gap === 0 ? '0.0' : `${gap > 0 ? '+' : '−'}${Math.abs(gap).toFixed(1)}`);
+---
+
+<div class="cp">
+  <aside class="cp-side">
+    <div class="cp-app"><span class="cp-dot"></span>{m.appName}</div>
+    <ul>
+      {m.nav.map((n, i) => <li class:list={[i === m.activeIndex && 'is-active']}>{n}</li>)}
+    </ul>
+  </aside>
+  <div class="cp-main">
+    <div class="cp-top">
+      <span class="cp-search">{m.search}</span>
+      <span class="cp-status"><span class="cp-live"></span>{m.status}</span>
+    </div>
+    <div class="cp-body">
+      <div class="cp-preview">
+        <span class="cp-label">{m.preview}</span>
+        <div class="cp-rel">
+          {
+            previewRows.map((r) => (
+              <div class:list={['cp-row', r.me && 'is-me']}>
+                <span>{r.pos}</span>
+                <span class="cp-name">{r.name}</span>
+                <span class="cp-gap">{fmt(r.gap)}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="cp-settings">
+        {
+          m.settings.map((s, i) => (
+            <div class="cp-set">
+              <span>{s.label}</span>
+              <span class="cp-val">{s.value}</span>
+              <span class="cp-slider">
+                <span style={`transform: scaleX(${[0.36, 0.8, 0.5][i]})`} />
+              </span>
+            </div>
+          ))
+        }
+        {
+          m.toggles.map((tg) => (
+            <div class="cp-tog">
+              <span>{tg.label}</span>
+              <span class:list={['cp-switch', tg.on && 'is-on']}>
+                <span />
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cp {
+    display: grid;
+    grid-template-columns: 26% 1fr;
+    height: 100%;
+    font-family: var(--font-display);
+    font-size: clamp(0.56rem, 1.75cqi, 0.95rem);
+    color: var(--c-text-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cp-side {
+    display: grid;
+    align-content: start;
+    gap: 1.2em;
+    padding: 1.2em 0.9em;
+    background: var(--c-side);
+    border-right: 1px solid var(--c-border);
+  }
+
+  .cp-app {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 700;
+    color: var(--c-text);
+  }
+
+  .cp-dot {
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 3px;
+    background: var(--c-accent);
+  }
+
+  .cp-side ul {
+    display: grid;
+    gap: 0.15em;
+    list-style: none;
+  }
+
+  .cp-side li {
+    padding: 0.35em 0.6em;
+    border-radius: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cp-side li.is-active {
+    background: var(--c-accent-soft);
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  .cp-main {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+  }
+
+  .cp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    padding: 0.8em 1.1em;
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .cp-search {
+    flex: 0 1 55%;
+    padding: 0.35em 0.7em;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+    background: var(--c-surface);
+    color: var(--c-text-3);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .cp-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-weight: 600;
+    color: var(--c-live);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .cp-live {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--c-live);
+  }
+
+  .cp-body {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.1em;
+    padding: 1.1em;
+    min-height: 0;
+  }
+
+  .cp-preview {
+    display: grid;
+    align-content: start;
+    gap: 0.6em;
+    padding: 0.9em;
+    border-radius: 6px;
+    background:
+      linear-gradient(140deg, var(--c-surface-alt), var(--c-bg));
+    border: 1px solid var(--c-border);
+  }
+
+  .cp-label {
+    font-size: 0.85em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-3);
+  }
+
+  .cp-rel {
+    background: var(--c-glass);
+    border: 1px solid var(--c-border-soft);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .cp-row {
+    display: grid;
+    grid-template-columns: 1.4em 1fr auto;
+    gap: 0.5em;
+    padding: 0.3em 0.6em;
+    color: var(--c-text);
+  }
+
+  .cp-row + .cp-row {
+    border-top: 1px solid var(--c-border-soft);
+  }
+
+  .cp-row.is-me {
+    background: var(--c-surface-alt);
+  }
+
+  .cp-row.is-me span:first-child {
+    color: var(--c-accent);
+  }
+
+  .cp-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cp-gap {
+    font-weight: 600;
+  }
+
+  .cp-settings {
+    display: grid;
+    align-content: start;
+    gap: 0.75em;
+  }
+
+  .cp-set {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35em;
+  }
+
+  .cp-val {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  .cp-slider {
+    grid-column: 1 / -1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--c-border);
+    overflow: hidden;
+  }
+
+  .cp-slider span {
+    display: block;
+    height: 100%;
+    background: var(--c-text-2);
+    transform-origin: left;
+  }
+
+  .cp-tog {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .cp-switch {
+    position: relative;
+    flex: none;
+    width: 2.2em;
+    height: 1.2em;
+    border-radius: 1em;
+    background: var(--c-border);
+  }
+
+  .cp-switch span {
+    position: absolute;
+    top: 0.15em;
+    left: 0.15em;
+    width: 0.9em;
+    height: 0.9em;
+    border-radius: 50%;
+    background: var(--c-text-3);
+  }
+
+  .cp-switch.is-on {
+    background: var(--c-accent);
+  }
+
+  .cp-switch.is-on span {
+    transform: translateX(1em);
+    background: var(--c-on-accent);
+  }
+  @container (max-width: 520px) {
+    .cp {
+      grid-template-columns: 1fr;
+      font-size: 0.62rem;
+    }
+    .cp-side {
+      display: none;
+    }
+  }
+</style>

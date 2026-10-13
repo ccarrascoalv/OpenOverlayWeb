@@ -1,0 +1,14 @@
+# Skills y configuración local de agentes
+/.claude/
+/.agents/
+/skills-lock.json
+
+# Assets originales de la app (los usados ya están copiados en website/src/assets)
+/Assets/
+
+# Node / Astro / pruebas
+node_modules/
+dist/
+.astro/
+test-results/
+playwright-report/

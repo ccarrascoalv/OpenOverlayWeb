@@ -1,0 +1,38 @@
+---
+// La página completa. Se renderiza una vez por idioma (src/pages/index.astro y src/pages/es/index.astro);
+// los textos salen del idioma de la ruta (Astro.currentLocale).
+import Base from '../layouts/Base.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Features from './Features.astro';
+import Widgets from './Widgets.astro';
+import Panel from './Panel.astro';
+import GetStarted from './GetStarted.astro';
+import Faq from './Faq.astro';
+import Footer from './Footer.astro';
+---
+
+<Base>
+  <div id="top"></div>
+  <Header />
+  <main id="main">
+    <Hero />
+    <Features />
+    <Widgets />
+    <Panel />
+    <GetStarted />
+    <Faq />
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  import { URLS } from '../config';
+  import { initHeader, initLiveMockups, initReveal } from '../scripts/motion';
+  import { initRelease } from '../scripts/release';
+
+  initHeader();
+  initReveal();
+  initLiveMockups();
+  initRelease(URLS.api);
+</script>

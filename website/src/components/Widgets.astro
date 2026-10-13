@@ -1,0 +1,184 @@
+---
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+const w = t.widgets;
+
+const brands = Object.entries(
+  import.meta.glob<string>('../assets/brands/*.svg', { eager: true, query: '?url', import: 'default' }),
+)
+  .map(([path, url]) => ({ key: path.split('/').pop()!.replace('.svg', ''), url }))
+  .sort((a, b) => a.key.localeCompare(b.key));
+---
+
+<section class="section" id="widgets" aria-labelledby="widgets-title">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 id="widgets-title">{w.title}</h2>
+      <p>{w.intro}</p>
+    </div>
+
+    <div class="groups">
+      {
+        w.groups.map((g, gi) => (
+          <section class="group" aria-labelledby={`wg-${gi}`} data-reveal style={`--reveal-i: ${gi}`}>
+            <h3 id={`wg-${gi}`} class="group-name">
+              {g.name}
+              <span class="tnum">{g.items.length}</span>
+            </h3>
+            <ul class="group-list">
+              {g.items.map((item) => (
+                <li class="wrow">
+                  <h4>{item.name}</h4>
+                  <p>{item.text}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+
+    <div class="extras">
+      <div class="extra columns" data-reveal>
+        <h3>{w.columns.title}</h3>
+        <p>{w.columns.text}</p>
+        <ul class="colhead" aria-label={w.columns.title}>
+          {w.columns.list.map((c) => <li>{c}</li>)}
+        </ul>
+        <p class="extra-note">{w.columns.irating}</p>
+      </div>
+      <div class="extra brands" data-reveal style="--reveal-i: 1">
+        <h3>{w.brands.title}</h3>
+        <p>{w.brands.text}</p>
+        <ul class="brand-grid" aria-hidden="true">
+          {brands.map((b) => <li style={`--logo: url("${b.url}")`} />)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .groups {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+
+  .group-name {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: var(--space-3);
+    border-bottom: 2px solid var(--c-border);
+    font-size: var(--step-0);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-2);
+  }
+
+  .group-name span {
+    color: var(--c-text-3);
+  }
+
+  .group-list {
+    list-style: none;
+  }
+
+  .wrow {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--c-border-soft);
+  }
+
+  .wrow h4 {
+    font-size: var(--step-2);
+    font-weight: 600;
+  }
+
+  .wrow p {
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--c-text-2);
+  }
+
+  .extras {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: var(--space-5);
+    margin-top: var(--space-7);
+  }
+
+  .extra {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-3);
+  }
+
+  .extra p {
+    color: var(--c-text-2);
+  }
+
+  .extra .extra-note {
+    font-size: var(--step--1);
+    color: var(--c-text-3);
+  }
+
+  .colhead {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    margin-block: var(--space-2);
+    list-style: none;
+    background: var(--c-border);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+  }
+
+  .colhead li {
+    flex: 1 1 auto;
+    padding: 0.45rem 0.7rem;
+    background: var(--c-surface-alt);
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--c-text-2);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(2.25rem, 1fr));
+    gap: var(--space-4) var(--space-3);
+    margin-top: var(--space-3);
+    list-style: none;
+  }
+
+  .brand-grid li {
+    aspect-ratio: 1;
+    background: var(--c-text-3);
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+    transition: opacity var(--dur-1) var(--ease-out);
+  }
+
+  @media (max-width: 1000px) {
+    .groups {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .extras {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-512.png';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+import { URLS } from '../config';
+const f = t.footer;
+---
+
+<footer class="site-footer">
+  <div class="container foot">
+    <div class="foot-brand">
+      <a class="foot-logo" href="#top" aria-label={t.nav.home}>
+        <Image src={logo} alt="" width={40} height={40} widths={[40, 80]} sizes="40px" loading="lazy" />
+        <span>OpenOverlay</span>
+      </a>
+      <p>{f.tagline}</p>
+    </div>
+
+    <nav class="foot-links" aria-labelledby="foot-links-title">
+      <h2 id="foot-links-title">{f.linksTitle}</h2>
+      <ul>
+        {
+          f.links.map((l) => (
+            <li>
+              <a href={URLS[l.key as keyof typeof URLS]}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="foot-credits">
+      <h2>{f.creditsTitle}</h2>
+      <p>{f.credits}</p>
+    </div>
+
+    <div class="foot-legal">
+      <p class="legal">{f.legal}</p>
+      <p class="foot-meta">
+        <span>{f.copyright}</span>
+        <span>{f.privacy}</span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-8) var(--space-7);
+    border-top: 1px solid var(--c-border);
+    background: var(--c-side);
+    font-size: var(--step--1);
+  }
+
+  .foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: var(--space-7) clamp(1.5rem, 1rem + 3vw, 4rem);
+  }
+
+  h2 {
+    margin-bottom: var(--space-4);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-text-3);
+  }
+
+  .foot-brand {
+    display: grid;
+    align-content: start;
+    gap: var(--space-4);
+  }
+
+  .foot-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 700;
+    color: var(--c-text);
+    text-decoration: none;
+    justify-self: start;
+  }
+
+  .foot-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+  }
+
+  .foot-brand p,
+  .foot-credits p {
+    color: var(--c-text-2);
+    max-width: 40ch;
+  }
+
+  .foot-links ul {
+    display: grid;
+    gap: var(--space-2);
+    list-style: none;
+  }
+
+  .foot-links a {
+    color: var(--c-text-2);
+    text-decoration: none;
+  }
+
+  .foot-links a:hover {
+    color: var(--c-text);
+    text-decoration: underline;
+  }
+
+  .foot-legal {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: var(--space-4);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .legal {
+    max-width: 80ch;
+    color: var(--c-text-2);
+  }
+
+  .foot-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    color: var(--c-text-3);
+  }
+
+  @media (max-width: 860px) {
+    .foot {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .foot-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .foot {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

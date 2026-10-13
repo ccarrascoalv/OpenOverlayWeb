@@ -1,0 +1,52 @@
+# Web de OpenOverlay
+
+Landing page de descarga de OpenOverlay. Astro con salida estática, CSS propio con variables, sin frameworks de UI, analítica ni cookies.
+
+## Comandos
+
+| Comando | Qué hace |
+|---|---|
+| `npm install` | Instala dependencias |
+| `npx playwright install chromium` | Descarga el navegador para las pruebas (una vez) |
+| `npm run dev` | Servidor de desarrollo en `localhost:4321` |
+| `npm run build` | Genera el sitio estático en `dist/` |
+| `npm run preview` | Sirve `dist/` en `localhost:4321` |
+| `npm test` | Pruebas de Playwright (necesita `npm run build` antes) |
+| `npm run screenshots` | Capturas a 375, 768 y 1440 px en `test-results/screenshots/` (con `preview` en marcha) |
+| `npm run lighthouse` | Informe de Lighthouse móvil en `test-results/` (con `preview` en marcha) |
+| `npm run check:colors` | Comprueba que no hay colores fuera de la paleta |
+| `npm run og` | Regenera `public/og.png` y `public/apple-touch-icon.png` |
+
+## Dónde cambiar cada cosa
+
+- **Idiomas:** inglés por defecto en `/` y español en `/es/`, con selector en la cabecera.
+  - Textos: `src/content/en.ts` y `src/content/es.ts` (misma estructura; TypeScript avisa si falta una clave).
+  - Para añadir un idioma: crea `src/content/<código>.ts`, regístralo en `src/i18n/index.ts` y en `astro.config.mjs`, y añade `src/pages/<código>/index.astro`.
+- **Enlaces y releases:** `src/config.ts`. La web no muestra número de versión: el botón apunta siempre a `/releases/latest/download/…`, que GitHub redirige a la última release, así que no hay que tocar nada al publicar una versión nueva.
+  - `RELEASE_STATUS`: `'published'` (el botón descarga el instalador) o `'none'` (el botón dice "Coming soon" y enlaza a las releases). Además, si la API de GitHub responde que no hay ninguna release, el botón cambia solo.
+- **Colores:** `src/styles/tokens.css` (paleta de LANDING-PAGE.md §1). Es el único archivo con colores literales.
+- **Estilo de los widgets:** `../style-widgets.md`.
+
+## Sustituir los mockups por capturas reales
+
+Los widgets del hero usan `WidgetFrame` y los del panel `ShotFrame`. Ambos aceptan `image` y `alt`: si se pasa una imagen, el mockup deja de renderizarse y el layout no cambia.
+
+```astro
+---
+import relativePng from '../assets/screenshots/relative.png';
+---
+<WidgetFrame title="Relative" image={relativePng} alt="Widget Relative durante una carrera" />
+<ShotFrame label="Panel de control" image={panelPng} alt="Panel de control de OpenOverlay" />
+```
+
+`ShotFrame` mantiene una proporción de 16:10: recorta la captura a esa proporción o ajusta `aspect-ratio` en el componente.
+
+## Despliegue en GitHub Pages
+
+El build es estático. Para servirlo en `https://<usuario>.github.io/<repo>/`:
+
+```bash
+SITE_URL=https://<usuario>.github.io BASE_PATH=/<repo> npm run build
+```
+
+Con dominio propio, basta con `SITE_URL=https://dominio` (base `/`).

@@ -1,0 +1,103 @@
+---
+/**
+ * Marco de widget. Hoy muestra un mockup HTML (el contenido del slot); cuando haya capturas
+ * reales, pasa `image` (un import de src/assets) y `alt`, y el mockup deja de renderizarse
+ * sin tocar el layout que lo rodea.
+ *
+ *   <WidgetFrame title="Relative" image={relativePng} alt="Widget Relative en carrera" />
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  title: string;
+  live?: boolean;
+  image?: ImageMetadata;
+  alt?: string;
+  class?: string;
+  style?: string;
+}
+const { title, live = false, image, alt = '', class: cls, style } = Astro.props;
+---
+
+<div class:list={['wf', image && 'wf--image', cls]} style={style}>
+  {
+    image ? (
+      <Image src={image} alt={alt} class="wf-img" widths={[480, 960]} sizes="(min-width: 1100px) 480px, 92vw" />
+    ) : (
+      <div class="wf-panel">
+        <div class="wf-head">
+          <span class="wf-title">{title}</span>
+          <span class="wf-meta">
+            <slot name="meta" />
+            {live && <span class="wf-live" aria-hidden="true" />}
+          </span>
+        </div>
+        <div class="wf-body">
+          <slot />
+        </div>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .wf {
+    font-family: var(--font-display);
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .wf-panel {
+    background: var(--c-glass);
+    border: 1px solid var(--c-border-soft);
+    border-radius: var(--radius-2);
+    box-shadow: 0 18px 40px -18px var(--c-shadow);
+    overflow: hidden;
+  }
+
+  .wf-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid var(--c-border-soft);
+    background: color-mix(in srgb, var(--c-surface) 70%, transparent);
+  }
+
+  .wf-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-2);
+  }
+
+  .wf-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--c-text-3);
+  }
+
+  .wf-live {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-live);
+    box-shadow: 0 0 0 3px var(--c-live-soft);
+  }
+
+  .wf-body {
+    padding: 0.35rem 0;
+  }
+
+  .wf-img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-2);
+  }
+</style>

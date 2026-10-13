@@ -1,0 +1,265 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo-512.png';
+import Icon from './Icon.astro';
+import DownloadCta from './DownloadCta.astro';
+import { langPath, languages, useT, type Lang } from '../i18n';
+import { URLS } from '../config';
+const t = useT(Astro.currentLocale);
+const current = t.lang as Lang;
+---
+
+<header class="site-header" data-header>
+  <div class="container hdr">
+    <a class="hdr-brand" href="#top" aria-label={t.nav.home}>
+      <Image src={logo} alt="" width={32} height={32} widths={[32, 64]} sizes="32px" loading="eager" />
+      <span>OpenOverlay</span>
+    </a>
+    <nav class="hdr-nav" aria-label={t.nav.label}>
+      <ul>
+        {t.nav.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="hdr-actions">
+      <nav class="lang" aria-label={t.nav.language}>
+        <ul>
+          {
+            (Object.keys(languages) as Lang[]).map((l) => (
+              <li>
+                <a
+                  href={langPath(l)}
+                  hreflang={l}
+                  lang={l}
+                  aria-current={l === current ? 'page' : undefined}
+                  aria-label={languages[l].name}
+                  data-lang-link
+                >
+                  {languages[l].label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <a class="hdr-gh" href={URLS.repo} aria-label={t.nav.github}>
+        <Icon name="github" />
+      </a>
+      <DownloadCta size="sm" meta={false} label={t.nav.download} />
+    </div>
+  </div>
+  <div class="hdr-rpm" aria-hidden="true"><span></span></div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur-2) var(--ease-out);
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--c-glass-strong);
+    opacity: 0;
+    transition: opacity var(--dur-2) var(--ease-out);
+    z-index: -1;
+  }
+
+  .site-header.is-stuck {
+    border-color: var(--c-border-soft);
+  }
+
+  .site-header.is-stuck::before {
+    opacity: 1;
+  }
+
+  .hdr {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: 64px;
+  }
+
+  .hdr-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    color: var(--c-text);
+  }
+
+  .hdr-brand img {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+  }
+
+  .hdr-nav {
+    margin-left: auto;
+  }
+
+  .hdr-nav ul {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+  }
+
+  .hdr-nav a {
+    display: inline-block;
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--radius-1);
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 500;
+    color: var(--c-text-2);
+    text-decoration: none;
+  }
+
+  .hdr-nav a:hover {
+    color: var(--c-text);
+  }
+
+  .hdr-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .lang ul {
+    display: flex;
+    padding: 2px;
+    list-style: none;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-2);
+  }
+
+  .lang a {
+    display: grid;
+    place-items: center;
+    min-width: 2.4rem;
+    height: 34px;
+    padding-inline: 0.5rem;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--c-text-3);
+    text-decoration: none;
+  }
+
+  .lang a:hover {
+    color: var(--c-text);
+  }
+
+  .lang a[aria-current='page'] {
+    background: var(--c-surface-alt);
+    color: var(--c-accent);
+  }
+
+  .hdr-gh {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-2);
+    color: var(--c-text-2);
+  }
+
+  .hdr-gh:hover {
+    color: var(--c-text);
+  }
+
+  .hdr-gh :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Barra de "RPM" que se llena con el scroll */
+  .hdr-rpm {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .hdr-rpm {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--dur-2) var(--ease-out);
+      -webkit-mask: repeating-linear-gradient(90deg, var(--c-bg) 0 14px, transparent 14px 17px);
+      mask: repeating-linear-gradient(90deg, var(--c-bg) 0 14px, transparent 14px 17px);
+    }
+
+    .is-stuck .hdr-rpm {
+      opacity: 1;
+    }
+
+    .hdr-rpm span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--c-live) 0 62%, var(--c-warn) 62% 86%, var(--c-error) 86%);
+    }
+
+    /* Tapa que se retira con el scroll: las luces se encienden de izquierda a derecha */
+    .hdr-rpm::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--c-surface-alt);
+      transform-origin: right center;
+      animation: rpm linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hdr-rpm {
+      display: none !important;
+    }
+  }
+
+  @keyframes rpm {
+    to {
+      transform: scaleX(0);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hdr-gh,
+    .hdr-brand span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .hdr-nav {
+      display: none;
+    }
+    .hdr-actions {
+      margin-left: auto;
+    }
+  }
+</style>
+
+<script>
+  // Al cambiar de idioma, conserva la sección en la que estás (las anclas son iguales en ambos idiomas).
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang-link]').forEach((a) => {
+    a.addEventListener('click', () => {
+      if (location.hash) a.href = a.href.split('#')[0] + location.hash;
+    });
+  });
+</script>

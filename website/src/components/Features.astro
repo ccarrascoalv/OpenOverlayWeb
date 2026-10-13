@@ -1,0 +1,101 @@
+---
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+const f = t.features;
+---
+
+<section class="section" id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 id="features-title">{f.title}</h2>
+      <p>{f.intro}</p>
+    </div>
+    <ul class="board">
+      {
+        f.items.map((item, i) => (
+          <li class="cell" data-reveal style={`--reveal-i: ${i % 3}`}>
+            <span class="cell-figure tnum">{item.figure}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    list-style: none;
+    background: var(--c-border);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-3);
+    overflow: hidden;
+  }
+
+  .cell {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    background: var(--c-surface);
+  }
+
+  /* Hover: capa de fondo por opacidad y contenido que se desplaza un poco */
+  .cell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--c-surface-alt);
+    opacity: 0;
+    transition: opacity var(--dur-2) var(--ease-out);
+  }
+
+  .cell > * {
+    position: relative;
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  .cell:hover::before {
+    opacity: 1;
+  }
+
+  .cell:hover > * {
+    transform: translateX(4px);
+  }
+
+  .cell-figure {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--c-text);
+    margin-bottom: var(--space-2);
+  }
+
+  h3 {
+    font-size: var(--step-2);
+  }
+
+  .cell p {
+    color: var(--c-text-2);
+    max-width: 34ch;
+  }
+
+  @media (max-width: 960px) {
+    .board {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .board {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

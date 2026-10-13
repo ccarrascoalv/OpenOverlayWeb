@@ -1,0 +1,197 @@
+---
+// Ilustración del Editor de layouts (no es una captura): catálogo, lienzo con rejilla y widgets colocados.
+import { useT } from '../../i18n';
+const t = useT(Astro.currentLocale);
+const m = t.panel.mock;
+
+const catalog = ['Relative', 'Standings', 'Cockpit', 'Fuel calculator', 'Flags', 'Track map', 'Weather'];
+// Posiciones en % del lienzo.
+const placed = [
+  { name: 'Track & session', x: 22, y: 4, w: 56, h: 7 },
+  { name: 'Standings', x: 3, y: 18, w: 24, h: 46 },
+  { name: 'Relative', x: 68, y: 52, w: 29, h: 30, selected: true },
+  { name: 'Cockpit', x: 38, y: 74, w: 24, h: 20 },
+  { name: 'Flags', x: 80, y: 18, w: 17, h: 12 },
+  { name: 'Fuel calculator', x: 3, y: 70, w: 20, h: 24 },
+];
+---
+
+<div class="le">
+  <div class="le-top">
+    <span class="le-title">{m.editor}</span>
+    <span class="le-layout">{m.layoutName}</span>
+    <span class="le-res">{m.canvas} · {m.zoom}</span>
+  </div>
+  <div class="le-body">
+    <aside class="le-cat">
+      <span class="le-label">{m.catalog}</span>
+      <ul>
+        {catalog.map((c) => <li>{c}</li>)}
+      </ul>
+    </aside>
+    <div class="le-canvas">
+      {
+        placed.map((p) => (
+          <div
+            class:list={['le-w', p.selected && 'is-sel']}
+            style={`left:${p.x}%;top:${p.y}%;width:${p.w}%;height:${p.h}%`}
+          >
+            <span>{p.name}</span>
+            {p.selected && (
+              <>
+                <i class="h h1" />
+                <i class="h h2" />
+                <i class="h h3" />
+                <i class="h h4" />
+              </>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .le {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    font-family: var(--font-display);
+    font-size: clamp(0.56rem, 1.7cqi, 0.92rem);
+    color: var(--c-text-2);
+  }
+
+  .le-top {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 0.75em 1.1em;
+    border-bottom: 1px solid var(--c-border);
+    background: var(--c-side);
+  }
+
+  .le-title {
+    font-weight: 700;
+    color: var(--c-text);
+  }
+
+  .le-layout {
+    padding: 0.2em 0.6em;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+  }
+
+  .le-res {
+    margin-left: auto;
+    color: var(--c-text-3);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .le-body {
+    display: grid;
+    grid-template-columns: 22% 1fr;
+    min-height: 0;
+  }
+
+  .le-cat {
+    display: grid;
+    align-content: start;
+    gap: 0.6em;
+    padding: 1em 0.8em;
+    background: var(--c-side);
+    border-right: 1px solid var(--c-border);
+  }
+
+  .le-label {
+    font-size: 0.85em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-3);
+  }
+
+  .le-cat ul {
+    display: grid;
+    gap: 0.35em;
+    list-style: none;
+  }
+
+  .le-cat li {
+    padding: 0.3em 0.55em;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+    background: var(--c-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .le-canvas {
+    position: relative;
+    margin: 1em;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+    background-color: var(--c-surface);
+    background-image:
+      linear-gradient(var(--c-border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--c-border-soft) 1px, transparent 1px);
+    background-size: 5% 8%;
+  }
+
+  .le-w {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    padding: 0.2em;
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    background: var(--c-surface-alt);
+    color: var(--c-text-2);
+    font-size: 0.9em;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .le-w.is-sel {
+    border-color: var(--c-accent);
+    color: var(--c-text);
+    background: color-mix(in srgb, var(--c-surface-alt) 85%, var(--c-accent));
+  }
+
+  .h {
+    position: absolute;
+    width: 0.55em;
+    height: 0.55em;
+    background: var(--c-accent);
+    border-radius: 1px;
+  }
+
+  .h1 {
+    top: -0.3em;
+    left: -0.3em;
+  }
+  .h2 {
+    top: -0.3em;
+    right: -0.3em;
+  }
+  .h3 {
+    bottom: -0.3em;
+    left: -0.3em;
+  }
+  .h4 {
+    bottom: -0.3em;
+    right: -0.3em;
+  }
+  @container (max-width: 520px) {
+    .le-body {
+      grid-template-columns: 1fr;
+    }
+    .le-cat {
+      display: none;
+    }
+    .le {
+      font-size: 0.62rem;
+    }
+  }
+</style>

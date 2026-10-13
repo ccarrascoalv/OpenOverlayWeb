@@ -1,0 +1,364 @@
+---
+import DownloadCta from './DownloadCta.astro';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+const s = t.start;
+const { install: s1, borderless: s2, widgets: s3, session: s4 } = s;
+---
+
+<section class="section" id="get-started" aria-labelledby="get-started-title">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 id="get-started-title">{s.title}</h2>
+      <p>{s.intro}</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step" data-reveal>
+        <span class="step-n tnum" aria-hidden="true">1</span>
+        <div class="step-body">
+          <h3>{s1.title}</h3>
+          <p>{s1.text}</p>
+        </div>
+      </li>
+
+      <li class="step is-key" data-reveal>
+        <span class="step-n tnum" aria-hidden="true">2</span>
+        <div class="step-body">
+          <p class="step-flag">{s2.keyLabel}</p>
+          <h3>{s2.title}</h3>
+          <p>{s2.text}</p>
+          <p class="path">
+            {
+              s2.path.map((part, i) => (
+                <>
+                  {i > 0 && <span class="path-sep" aria-hidden="true">→</span>}
+                  <kbd class:list={[i === s2.path.length - 1 && 'is-target']}>{part}</kbd>
+                </>
+              ))
+            }
+            <span class="path-alt">{s2.pathAlt}</span>
+          </p>
+        </div>
+      </li>
+
+      <li class="step" data-reveal>
+        <span class="step-n tnum" aria-hidden="true">3</span>
+        <div class="step-body">
+          <h3>{s3.title}</h3>
+          <p>{s3.text}</p>
+          <ul class="toggles" aria-hidden="true">
+            {
+              s3.toggles.map((w) => (
+                <li>
+                  <span>{w.name}</span>
+                  <span class:list={['switch', w.on && 'is-on']}>
+                    <span />
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="unlock">
+            {s3.unlock.text}{' '}
+            <span class="keys">
+              {
+                s3.unlock.keys.map((k, i) => (
+                  <>
+                    {i > 0 && <span class="plus">+</span>}
+                    <kbd>{k}</kbd>
+                  </>
+                ))
+              }
+            </span>
+            {s3.unlock.after}
+          </p>
+        </div>
+      </li>
+
+      <li class="step" data-reveal>
+        <span class="step-n tnum" aria-hidden="true">4</span>
+        <div class="step-body">
+          <h3>{s4.title}</h3>
+          <p>{s4.text}</p>
+          <p class="status" aria-hidden="true">
+            <span class="status-pill is-wait">{s4.statusWaiting}</span>
+            <span class="status-arrow">→</span>
+            <span class="status-pill is-live"><span class="dot"></span>{s4.statusLive}</span>
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="finish" data-reveal>
+      <p class="finish-title">{s.closing}</p>
+      <DownloadCta />
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    list-style: none;
+    max-width: 58rem;
+  }
+
+  /* Línea de progreso que une los pasos */
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: calc(1.5rem - 1px);
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 2px;
+    background: var(--c-border);
+  }
+
+  .step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
+  }
+
+  .step-n {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--c-border);
+    border-radius: 50%;
+    background: var(--c-surface);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 700;
+    color: var(--c-text);
+  }
+
+  .step-body {
+    display: grid;
+    gap: var(--space-3);
+    padding-top: 0.55rem;
+    padding-bottom: var(--space-4);
+  }
+
+  .step-body > p {
+    color: var(--c-text-2);
+    max-width: 62ch;
+  }
+
+  /* Paso clave: Borderless */
+  .step.is-key .step-n {
+    border-color: var(--c-warn);
+    background: var(--c-warn);
+    color: var(--c-on-accent);
+  }
+
+  .step.is-key .step-body {
+    padding: var(--space-5);
+    border: 1px solid color-mix(in srgb, var(--c-warn) 45%, transparent);
+    border-radius: var(--radius-3);
+    background: var(--c-warn-soft);
+  }
+
+  .step-flag {
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-warn);
+  }
+
+  .step.is-key h3 {
+    font-size: var(--step-3);
+  }
+
+  .path {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .path kbd {
+    font-size: var(--step-0);
+    padding: 0.2em 0.6em;
+  }
+
+  .path kbd.is-target {
+    border-color: var(--c-warn);
+    color: var(--c-text);
+    background: color-mix(in srgb, var(--c-warn) 22%, var(--c-surface-alt));
+  }
+
+  .path-sep {
+    color: var(--c-text-3);
+  }
+
+  .path-alt {
+    font-size: var(--step--1);
+    color: var(--c-text-2);
+  }
+
+  .toggles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 16rem));
+    gap: 1px;
+    margin-top: var(--space-2);
+    list-style: none;
+    background: var(--c-border);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    justify-self: start;
+  }
+
+  .toggles li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: 0.6rem 0.85rem;
+    background: var(--c-side);
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 500;
+    color: var(--c-text);
+  }
+
+  .switch {
+    position: relative;
+    flex: none;
+    width: 2.1rem;
+    height: 1.15rem;
+    border-radius: 1rem;
+    background: var(--c-border);
+  }
+
+  .switch span {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background: var(--c-text-3);
+  }
+
+  .switch.is-on {
+    background: var(--c-accent);
+  }
+
+  .switch.is-on span {
+    transform: translateX(0.95rem);
+    background: var(--c-on-accent);
+  }
+
+  .status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--c-border);
+    font-family: var(--font-display);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .status-pill.is-wait {
+    color: var(--c-text-3);
+  }
+
+  .status-pill.is-live {
+    color: var(--c-live);
+    border-color: color-mix(in srgb, var(--c-live) 45%, transparent);
+    background: var(--c-live-soft);
+  }
+
+  .status-pill .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-live);
+  }
+
+  .status-arrow {
+    color: var(--c-text-3);
+  }
+
+  .unlock {
+    font-size: var(--step--1);
+    color: var(--c-text-3) !important;
+    line-height: 2;
+  }
+
+  .finish {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+    padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-3);
+    background: var(--c-surface);
+  }
+
+  .finish-title {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--c-text);
+  }
+
+  @media (max-width: 760px) {
+    .toggles {
+      grid-template-columns: minmax(0, 1fr);
+      justify-self: stretch;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .steps::before {
+      left: calc(1.125rem - 1px);
+    }
+
+    .step {
+      grid-template-columns: 2.25rem minmax(0, 1fr);
+      gap: var(--space-3);
+    }
+
+    .step-n {
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: var(--step-1);
+    }
+
+    .step-body {
+      padding-top: 0.2rem;
+    }
+
+    .step.is-key .step-body {
+      padding: var(--space-4);
+    }
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import WidgetFrame from '../WidgetFrame.astro';
+import { useT } from '../../i18n';
+const t = useT(Astro.currentLocale);
+
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: cls, style } = Astro.props;
+const m = t.mock.flags;
+---
+
+<WidgetFrame title={m.title} class={cls} style={style}>
+  <div class="flags" data-mock="flags">
+    {
+      m.states.map((s, i) => (
+        <div class:list={['flag-state', `flag--${s.id}`, i === 1 && 'is-on']} data-flag={s.id}>
+          <span class="flag-swatch" />
+          <span class="flag-text">
+            <strong>{s.label}</strong>
+            <span>{s.detail}</span>
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</WidgetFrame>
+
+<style>
+  .flags {
+    display: grid;
+    padding: 0.4rem 0.7rem 0.5rem;
+  }
+
+  .flag-state {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity var(--dur-3) var(--ease-out),
+      transform var(--dur-3) var(--ease-out);
+  }
+
+  .flag-state.is-on {
+    opacity: 1;
+    transform: none;
+  }
+
+  .flag-swatch {
+    flex: none;
+    width: 3.2rem;
+    height: 2.2rem;
+    border-radius: 3px;
+    background: var(--flag-c);
+  }
+
+  .flag--green {
+    --flag-c: var(--c-live);
+  }
+
+  .flag--yellow {
+    --flag-c: var(--c-warn);
+  }
+
+  .flag--yellow.is-on .flag-swatch {
+    animation: flag-blink 1s steps(1, end) infinite;
+  }
+
+  .flag--white {
+    --flag-c: var(--c-text);
+  }
+
+  .flag--checkered .flag-swatch {
+    background:
+      repeating-conic-gradient(var(--c-text) 0 25%, var(--c-bg) 0 50%) 0 0 / 0.55rem 0.55rem;
+    outline: 1px solid var(--c-border);
+  }
+
+  .flag-text {
+    display: grid;
+    line-height: 1.15;
+  }
+
+  .flag-text strong {
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .flag-text span {
+    font-size: 0.85rem;
+    color: var(--c-text-2);
+  }
+
+  @keyframes flag-blink {
+    50% {
+      opacity: 0.25;
+    }
+  }
+</style>

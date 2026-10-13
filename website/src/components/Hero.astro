@@ -1,0 +1,296 @@
+---
+import { Image, Picture } from 'astro:assets';
+import logo from '../assets/logo-512.png';
+import spa from '../assets/spa2.jpg';
+import DownloadCta from './DownloadCta.astro';
+import Relative from './mockups/Relative.astro';
+import FuelCalc from './mockups/FuelCalc.astro';
+import Flags from './mockups/Flags.astro';
+import TrackSession from './mockups/TrackSession.astro';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <Picture
+      src={spa}
+      alt=""
+      formats={['avif', 'webp']}
+      widths={[640, 1024, 1600, 1920]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="hero-photo"
+    />
+    <div class="hero-shade"></div>
+  </div>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <Image src={logo} alt="OpenOverlay" class="hero-logo" width={72} height={72} widths={[72, 144]} sizes="72px" loading="eager" />
+      <h1 id="hero-title">
+        <span class="hero-title-a">{t.hero.titleA}</span>
+        <span class="hero-title-b">{t.hero.titleB}</span>
+      </h1>
+      <p class="hero-sub">{t.hero.subtitle}</p>
+      <DownloadCta class="hero-cta" />
+      <ul class="hero-facts">
+        {
+          t.download.facts.map((f) => (
+            <li>
+              <strong>{f.strong}.</strong> {f.text}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="hero-smartscreen">{t.download.smartscreen}</p>
+    </div>
+
+    <div class="hero-scene" role="img" aria-label={t.hero.sceneLabel}>
+      <div class="scene" aria-hidden="true" data-scene>
+        <TrackSession class="w w-track" style="--i: 0" />
+        <Flags class="w w-flags" style="--i: 1" />
+        <Relative class="w w-rel" style="--i: 2" />
+        <FuelCalc class="w w-fuel" style="--i: 3" />
+        <span class="scene-note">{t.hero.sampleNote}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    margin-top: -65px;
+    padding-top: calc(65px + clamp(2rem, 1rem + 4vw, 5rem));
+    padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .hero-bg :global(picture),
+  .hero-bg :global(img) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-bg :global(img) {
+    object-fit: cover;
+    object-position: 60% 70%;
+    filter: saturate(0.55) brightness(0.8);
+  }
+
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, var(--c-bg) 0%, color-mix(in srgb, var(--c-bg) 90%, transparent) 34%, color-mix(in srgb, var(--c-bg) 40%, transparent) 70%, color-mix(in srgb, var(--c-bg) 55%, transparent) 100%),
+      linear-gradient(180deg, color-mix(in srgb, var(--c-bg) 55%, transparent) 0%, transparent 30%, transparent 70%, var(--c-bg) 100%);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 35rem) minmax(0, 1fr);
+    gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+    align-items: center;
+  }
+
+  .hero-copy {
+    display: grid;
+    gap: var(--space-5);
+    justify-items: start;
+  }
+
+  .hero-logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px -12px var(--c-shadow);
+  }
+
+  h1 {
+    display: grid;
+    gap: 0.1em;
+    font-size: clamp(2.4rem, 1.8rem + 2.2vw, 3.5rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+  }
+
+  .hero-title-b {
+    color: var(--c-text-2);
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--c-text-2);
+    max-width: 34rem;
+  }
+
+  .hero-cta {
+    margin-top: var(--space-2);
+  }
+
+  .hero-facts {
+    display: grid;
+    gap: var(--space-2);
+    list-style: none;
+    font-size: var(--step--1);
+    color: var(--c-text-3);
+  }
+
+  .hero-facts li {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+
+  .hero-facts li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.45rem;
+    height: 2px;
+    background: var(--c-live);
+  }
+
+  .hero-facts strong {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  .hero-smartscreen {
+    max-width: 30rem;
+    font-size: var(--step--1);
+    color: var(--c-text-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--c-border-soft);
+  }
+
+  /* ---------- Escena de widgets ---------- */
+  .hero-scene {
+    min-width: 0;
+  }
+
+  .scene {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-rows: auto auto 1fr;
+    gap: var(--space-4) var(--space-5);
+  }
+
+  .scene :global(.w) {
+    animation: float 7s var(--ease-in-out) infinite alternate;
+    animation-delay: calc(var(--i) * -1.7s);
+  }
+
+  .scene :global(.w-track) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin-bottom: var(--space-4);
+  }
+
+  .scene :global(.w-flags) {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .scene :global(.w-rel) {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    align-self: start;
+    margin-top: var(--space-6);
+  }
+
+  .scene :global(.w-fuel) {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: start;
+  }
+
+  .scene-note {
+    position: absolute;
+    right: 0;
+    bottom: calc(-1 * var(--space-6));
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-3);
+  }
+
+  @keyframes float {
+    from {
+      transform: translate3d(0, -3px, 0);
+    }
+    to {
+      transform: translate3d(0, 4px, 0);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero-copy {
+      max-width: 40rem;
+    }
+
+    .hero-shade {
+      background:
+        linear-gradient(180deg, var(--c-bg) 0%, color-mix(in srgb, var(--c-bg) 92%, transparent) 45%, color-mix(in srgb, var(--c-bg) 45%, transparent) 70%, var(--c-bg) 100%);
+    }
+
+    .hero-scene {
+      max-width: 44rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .scene {
+      gap: var(--space-3);
+    }
+
+    .scene :global(.w-flags),
+    .scene :global(.w-fuel),
+    .scene :global(.w-rel) {
+      margin-top: 0;
+    }
+
+    .scene {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .scene :global(.w-track) {
+      margin-bottom: 0;
+    }
+
+    .scene :global(.w-rel) {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .scene :global(.w-flags) {
+      grid-column: 1 / -1;
+      grid-row: 3;
+    }
+
+    .scene :global(.w-fuel) {
+      grid-column: 1 / -1;
+      grid-row: 4;
+    }
+  }
+</style>

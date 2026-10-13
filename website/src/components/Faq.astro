@@ -1,0 +1,153 @@
+---
+import Icon from './Icon.astro';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+import { URLS } from '../config';
+const f = t.faq;
+---
+
+<section class="section" id="faq" aria-labelledby="faq-title">
+  <div class="container faq-grid">
+    <div class="faq-head" data-reveal>
+      <h2 id="faq-title">{f.title}</h2>
+    </div>
+    <div class="faq-list" data-reveal>
+      {
+        f.items.map((item) => (
+          <details class="qa" data-accordion>
+            <summary>
+              <span class="qa-q">{item.q}</span>
+              <Icon name="chevron" class="qa-icon" />
+            </summary>
+            <div class="qa-a">
+              <p>
+                {item.a}
+                {'link' in item && item.link && (
+                  <>
+                    {' '}
+                    <a href={URLS[item.link.key as keyof typeof URLS]}>{item.link.label}</a>
+                  </>
+                )}
+              </p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Cierre animado: <details> se abre/cierra de forma nativa (accesible con teclado);
+  // aquí solo se retrasa el cierre para que la respuesta se desvanezca antes de ocultarse.
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLDetailsElement>('[data-accordion]').forEach((d) => {
+    const summary = d.querySelector('summary')!;
+    summary.addEventListener('click', (e) => {
+      if (!d.open || reduced.matches) return;
+      e.preventDefault();
+      d.classList.add('is-closing');
+      window.setTimeout(() => {
+        d.open = false;
+        d.classList.remove('is-closing');
+      }, 160);
+    });
+  });
+</script>
+
+<style>
+  .faq-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+    align-items: start;
+  }
+
+  .faq-head {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .faq-list {
+    border-top: 1px solid var(--c-border);
+  }
+
+  .qa {
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-2);
+    cursor: pointer;
+    list-style: none;
+    border-radius: var(--radius-1);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .qa-q {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--c-text);
+  }
+
+  summary :global(.qa-icon) {
+    flex: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    color: var(--c-text-3);
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+
+  summary:hover :global(.qa-icon) {
+    color: var(--c-text);
+  }
+
+  .qa[open]:not(.is-closing) summary :global(.qa-icon) {
+    transform: rotate(180deg);
+    color: var(--c-accent);
+  }
+
+  .qa-a {
+    padding: 0 var(--space-2) var(--space-5);
+    max-width: 62ch;
+    color: var(--c-text-2);
+  }
+
+  .qa[open] .qa-a {
+    animation: qa-in var(--dur-2) var(--ease-out);
+  }
+
+  .qa.is-closing .qa-a {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity var(--dur-1) var(--ease-out),
+      transform var(--dur-1) var(--ease-out);
+  }
+
+  @keyframes qa-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .faq-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .faq-head {
+      position: static;
+    }
+  }
+</style>

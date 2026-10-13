@@ -1,0 +1,182 @@
+---
+import ShotFrame from './ShotFrame.astro';
+import ControlPanel from './mockups/ControlPanel.astro';
+import LayoutEditor from './mockups/LayoutEditor.astro';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+const p = t.panel;
+---
+
+<section class="section" id="panel" aria-labelledby="panel-title">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 id="panel-title">{p.title}</h2>
+      <p>{p.intro}</p>
+    </div>
+
+    <div class="feature-row" data-reveal>
+      <div class="feature-text">
+        <h3>{p.control.title}</h3>
+        <ul class="ticks">
+          {p.control.items.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+      <ShotFrame label={p.control.mockLabel}>
+        <ControlPanel />
+      </ShotFrame>
+    </div>
+
+    <div class="feature-row is-flipped" data-reveal>
+      <div class="feature-text">
+        <h3>{p.layouts.title}</h3>
+        <ul class="ticks">
+          {p.layouts.items.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+      <ShotFrame label={p.layouts.mockLabel}>
+        <LayoutEditor />
+      </ShotFrame>
+    </div>
+
+    <div class="details">
+      <div class="detail" data-reveal>
+        <h3>{p.shortcuts.title}</h3>
+        <ul class="shortcuts">
+          {
+            p.shortcuts.list.map((s) => (
+              <li>
+                <span class="keys">
+                  {s.keys.map((k, i) => (
+                    <>
+                      {i > 0 && <span class="plus">+</span>}
+                      <kbd>{k}</kbd>
+                    </>
+                  ))}
+                </span>
+                <span>{s.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="detail-note">{p.shortcuts.note}</p>
+      </div>
+      <div class="detail" data-reveal style="--reveal-i: 1">
+        <h3>{p.comfort.title}</h3>
+        <ul class="ticks">
+          {p.comfort.items.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+      <div class="detail" data-reveal style="--reveal-i: 2">
+        <h3>{p.reliability.title}</h3>
+        <ul class="ticks">
+          {p.reliability.items.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-row {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+    align-items: center;
+  }
+
+  .feature-row + .feature-row {
+    margin-top: var(--space-8);
+  }
+
+  .feature-row.is-flipped {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  .feature-row.is-flipped .feature-text {
+    order: 2;
+  }
+
+  .feature-text {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .feature-text h3 {
+    font-size: var(--step-3);
+  }
+
+  .ticks {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .ticks li {
+    position: relative;
+    padding-left: 1.4rem;
+    color: var(--c-text-2);
+  }
+
+  .ticks li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.72em;
+    width: 0.7rem;
+    height: 2px;
+    background: var(--c-text-3);
+  }
+
+  .details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    margin-top: var(--space-8);
+    padding-top: var(--space-7);
+    border-top: 1px solid var(--c-border-soft);
+  }
+
+  .detail {
+    display: grid;
+    align-content: start;
+    gap: var(--space-4);
+  }
+
+  .detail .ticks li,
+  .shortcuts li {
+    font-size: var(--step--1);
+  }
+
+  .shortcuts {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+  }
+
+  .shortcuts li {
+    display: grid;
+    gap: var(--space-1);
+    color: var(--c-text-2);
+  }
+
+  .detail-note {
+    font-size: var(--step--1);
+    color: var(--c-text-3);
+  }
+
+  @media (max-width: 900px) {
+    .feature-row,
+    .feature-row.is-flipped {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .feature-row.is-flipped .feature-text {
+      order: 0;
+    }
+
+    .details {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-7);
+    }
+  }
+</style>

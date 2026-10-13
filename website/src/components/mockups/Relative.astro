@@ -1,0 +1,152 @@
+---
+import WidgetFrame from '../WidgetFrame.astro';
+import { useT } from '../../i18n';
+const t = useT(Astro.currentLocale);
+
+interface Props {
+  class?: string;
+  style?: string;
+}
+const { class: cls, style } = Astro.props;
+const m = t.mock.relative;
+
+const brands = import.meta.glob<string>('../../assets/brands/*.svg', { eager: true, query: '?raw', import: 'default' });
+const flags = import.meta.glob<string>('../../assets/flags/*.svg', { eager: true, query: '?url', import: 'default' });
+
+const brandSvg = (key: string) =>
+  (brands[`../../assets/brands/${key}.svg`] ?? '')
+    .replace(/<title>.*?<\/title>/, '')
+    .replace('<svg ', '<svg aria-hidden="true" focusable="false" fill="currentColor" ');
+const flagUrl = (key: string) => flags[`../../assets/flags/${key}.svg`];
+const fmt = (gap: number) => (gap === 0 ? '0.0' : `${gap > 0 ? '+' : '−'}${Math.abs(gap).toFixed(1)}`);
+---
+
+<WidgetFrame title={m.title} live class={cls} style={style}>
+  <span slot="meta">{m.session} · {m.sof}</span>
+  <div class="rel" data-mock="relative">
+    {
+      m.rows.map((r) => (
+        <div class:list={['rel-row', r.me && 'is-me']} data-gap={r.gap}>
+          <span class="rel-pos">{r.pos}</span>
+          <span class="rel-num">#{r.num}</span>
+          <span class="rel-brand" set:html={brandSvg(r.brand)} />
+          <img class="rel-flag" src={flagUrl(r.flag)} alt="" width="18" height="12" loading="eager" decoding="async" />
+          <span class="rel-name">{r.name}</span>
+          <span class="rel-lic">{r.lic}</span>
+          <span class="rel-ir">{r.ir}</span>
+          <span class="rel-gap" data-gap-out>
+            {fmt(r.gap)}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+</WidgetFrame>
+
+<style>
+  .rel {
+    display: grid;
+  }
+
+  .rel-row {
+    display: grid;
+    grid-template-columns: 1.6rem 2.3rem 1.1rem 1.15rem minmax(0, 1fr) 3.1rem 2.3rem 2.9rem;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.28rem 0.7rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--c-text);
+  }
+
+  .rel-row + .rel-row {
+    border-top: 1px solid color-mix(in srgb, var(--c-border) 45%, transparent);
+  }
+
+  .rel-row.is-me {
+    background: color-mix(in srgb, var(--c-surface-alt) 92%, transparent);
+  }
+
+  .rel-pos {
+    text-align: right;
+    font-weight: 700;
+    color: var(--c-text-2);
+  }
+
+  .is-me .rel-pos {
+    color: var(--c-accent);
+  }
+
+  .rel-num {
+    color: var(--c-text-3);
+    font-size: 0.85rem;
+  }
+
+  .rel-brand {
+    width: 1rem;
+    height: 1rem;
+    color: var(--c-text-2);
+  }
+
+  .rel-brand :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .rel-flag {
+    width: 1.1rem;
+    height: auto;
+    border-radius: 2px;
+  }
+
+  .rel-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .is-me .rel-name {
+    font-weight: 700;
+  }
+
+  .rel-lic {
+    font-size: 0.8rem;
+    color: var(--c-text-3);
+    text-align: center;
+    border: 1px solid var(--c-border);
+    border-radius: 3px;
+    padding: 0 0.2rem;
+  }
+
+  .rel-ir {
+    font-size: 0.85rem;
+    color: var(--c-text-2);
+    text-align: right;
+  }
+
+  .rel-gap {
+    text-align: right;
+    font-weight: 600;
+    transition: opacity var(--dur-1) var(--ease-out);
+  }
+
+  .is-me .rel-gap {
+    color: var(--c-text-3);
+  }
+
+  .rel-gap.is-tick {
+    opacity: 0.55;
+  }
+
+  @media (max-width: 420px) {
+    .rel-row {
+      grid-template-columns: 1.4rem 2.1rem 1rem 1.1rem minmax(0, 1fr) 2.2rem 2.7rem;
+      padding-inline: 0.55rem;
+      gap: 0.4rem;
+    }
+    .rel-lic {
+      display: none;
+    }
+  }
+</style>

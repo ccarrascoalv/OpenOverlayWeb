@@ -1,0 +1,92 @@
+---
+import Icon from './Icon.astro';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+import { RELEASE_STATUS, URLS } from '../config';
+
+interface Props {
+  size?: 'lg' | 'sm';
+  meta?: boolean;
+  label?: string;
+  class?: string;
+}
+const { size = 'lg', meta = true, label = t.download.cta, class: cls } = Astro.props;
+
+const published = RELEASE_STATUS === 'published';
+const href = published ? URLS.download : URLS.releases;
+const text = published ? label : t.download.ctaSoon;
+---
+
+<div class:list={['dl', `dl--${size}`, cls]}>
+  <a
+    class:list={['btn btn--primary', size === 'sm' && 'btn--sm']}
+    href={href}
+    data-dl-link
+    data-soon-label={t.download.ctaSoon}
+    data-soon-href={URLS.releases}
+    data-soon-title={t.download.ctaSoonHint}
+    title={published ? undefined : t.download.ctaSoonHint}
+  >
+    <Icon name={published ? 'download' : 'external'} />
+    <span data-dl-label>{text}</span>
+  </a>
+  {
+    meta && (
+      <p class="dl-meta">
+        {t.download.tagline.map((item) => (
+          <span class="dl-tag">{item}</span>
+        ))}
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .dl {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
+  .dl .btn {
+    white-space: nowrap;
+  }
+
+  .dl--lg .btn {
+    min-height: 54px;
+    padding-inline: 1.6rem;
+    font-size: var(--step-2);
+  }
+
+  .dl-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 500;
+    color: var(--c-text-2);
+    letter-spacing: 0.01em;
+  }
+
+  .dl-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .dl-tag + .dl-tag::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--c-text-3);
+  }
+  @media (max-width: 400px) {
+    .dl--lg .btn {
+      font-size: var(--step-1);
+      padding-inline: 1.2rem;
+    }
+  }
+</style>

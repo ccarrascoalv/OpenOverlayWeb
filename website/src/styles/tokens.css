@@ -1,0 +1,63 @@
+/* Paleta de OpenOverlay (LANDING-PAGE.md §1). Único sitio del proyecto con colores literales. */
+:root {
+  color-scheme: dark;
+
+  --c-bg: #0E1116;            /* Fondo ventana */
+  --c-side: #121519;          /* Fondo lateral */
+  --c-surface: #161A21;       /* Superficie / tarjeta */
+  --c-surface-alt: #1B2029;   /* Superficie alternativa */
+  --c-border: #262C36;        /* Borde */
+  --c-text: #F2F4F7;          /* Texto principal */
+  --c-text-2: #B4BCC8;        /* Texto secundario */
+  --c-text-3: #8B95A3;        /* Texto apagado */
+  --c-accent: #FFD24D;        /* Ámbar: solo CTA y estados activos */
+  --c-live: #3DD68C;          /* En vivo */
+  --c-warn: #F5A524;          /* Aviso */
+  --c-error: #F26D6D;         /* Error */
+
+  /* Derivados (mezclas de la paleta, nunca colores nuevos) */
+  --c-on-accent: var(--c-bg);
+  --c-glass: color-mix(in srgb, var(--c-bg) 84%, transparent);
+  --c-glass-strong: color-mix(in srgb, var(--c-bg) 92%, transparent);
+  --c-border-soft: color-mix(in srgb, var(--c-border) 70%, transparent);
+  --c-accent-soft: color-mix(in srgb, var(--c-accent) 14%, transparent);
+  --c-live-soft: color-mix(in srgb, var(--c-live) 16%, transparent);
+  --c-warn-soft: color-mix(in srgb, var(--c-warn) 14%, transparent);
+  --c-error-soft: color-mix(in srgb, var(--c-error) 16%, transparent);
+  --c-shadow: color-mix(in srgb, var(--c-bg) 70%, transparent);
+
+  /* Tipografía */
+  --font-display: 'Barlow Semi Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter Variable', 'Segoe UI', system-ui, sans-serif;
+
+  /* Escala */
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-0: clamp(0.9375rem, 0.91rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.125rem, 1.07rem + 0.3vw, 1.3125rem);
+  --step-2: clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
+  --step-3: clamp(1.75rem, 1.5rem + 1.2vw, 2.625rem);
+  --step-4: clamp(2.25rem, 1.8rem + 2.4vw, 4rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: clamp(4rem, 3rem + 4vw, 7rem);
+
+  --radius-1: 4px;
+  --radius-2: 8px;
+  --radius-3: 12px;
+
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --max: 1280px;
+
+  /* Movimiento */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 150ms;
+  --dur-2: 250ms;
+  --dur-3: 400ms;
+}
