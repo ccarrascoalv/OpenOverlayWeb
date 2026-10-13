@@ -8,10 +8,7 @@
 import type { ImageMetadata } from 'astro';
 import nogaro from '../assets/heroes/nogaro.jpg';
 import spa from '../assets/heroes/spa.jpg';
-import lemans499p from '../assets/heroes/lemans-499p-2.jpg';
 import porscheGtp from '../assets/heroes/porsche-gtp.jpg';
-import valkyrie1 from '../assets/heroes/spa-valkyrie-1.jpg';
-import valkyrie3 from '../assets/heroes/spa-valkyrie-3.jpg';
 
 export interface Hero {
   id: string;
@@ -55,16 +52,6 @@ export const heroes: Hero[] = [
     brightness: 0.8,
   },
   {
-    id: 'lemans-499p',
-    image: lemans499p,
-    circuit: 'Le Mans',
-    title: { en: 'Ferrari 499P at Le Mans at night', es: 'Ferrari 499P en Le Mans de noche' },
-    author: ME,
-    kind: 'sim',
-    position: '30% 50%',
-    brightness: 0.95,
-  },
-  {
     id: 'porsche-gtp',
     image: porscheGtp,
     circuit: 'Spa-Francorchamps',
@@ -73,26 +60,6 @@ export const heroes: Hero[] = [
     kind: 'sim',
     position: '30% 50%',
     brightness: 0.95,
-  },
-  {
-    id: 'spa-valkyrie-1',
-    image: valkyrie1,
-    circuit: 'Spa-Francorchamps',
-    title: { en: 'Aston Martin Valkyrie at Spa', es: 'Aston Martin Valkyrie en Spa' },
-    author: ME,
-    kind: 'sim',
-    position: '60% 50%',
-    brightness: 0.85,
-  },
-  {
-    id: 'spa-valkyrie-3',
-    image: valkyrie3,
-    circuit: 'Spa-Francorchamps',
-    title: { en: 'Aston Martin Valkyrie at Spa', es: 'Aston Martin Valkyrie en Spa' },
-    author: ME,
-    kind: 'sim',
-    position: '50% 50%',
-    brightness: 0.85,
   },
 ];
 
