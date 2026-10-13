@@ -43,10 +43,12 @@ import relativePng from '../assets/screenshots/relative.png';
 
 ## Despliegue en GitHub Pages
 
-El build es estático. Para servirlo en `https://<usuario>.github.io/<repo>/`:
+El workflow `.github/workflows/deploy.yml` construye esta carpeta y la publica en cada push a `main` que toque `website/` (también se puede lanzar a mano desde la pestaña *Actions*). La URL y la ruta base las toma de la configuración de Pages del repositorio, así que no hay que tocarlo si cambia el repositorio o se añade un dominio propio.
+
+Activación (una vez): *Settings → Pages → Source: GitHub Actions*.
+
+Para reproducir el build de producción en local:
 
 ```bash
-SITE_URL=https://<usuario>.github.io BASE_PATH=/<repo> npm run build
+SITE_URL=https://ccarrascoalv.github.io BASE_PATH=/OpenOverlayWeb npm run build
 ```
-
-Con dominio propio, basta con `SITE_URL=https://dominio` (base `/`).
