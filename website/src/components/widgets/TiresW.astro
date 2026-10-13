@@ -1,0 +1,32 @@
+---
+// Tires de la app (Widgets/TireInfoPanel.xaml): desgaste por banda arriba (verde > 60 %, ámbar > 30 %,
+// rojo por debajo), barras de desgaste dentro del neumático y temperaturas abajo.
+import { tyres } from '../../data/preview';
+const tone = (w: number) => (w > 60 ? 'wear-ok' : w > 30 ? 'wear-mid' : 'wear-low');
+---
+
+<div class="ow ow-panel ow-tires" data-live="tires" style="width:340px">
+  {
+    tyres.map((ty) => (
+      <div class="ow-tyrebox">
+        <div class="ow-pct">
+          {ty.wear.map((w) => (
+            <span class={tone(w)}>{w}%</span>
+          ))}
+        </div>
+        <div class="ow-shell">
+          {ty.wear.map((w) => (
+            <span class={tone(w)}>
+              <i style={`transform:scaleY(${w / 100})`} />
+            </span>
+          ))}
+        </div>
+        <div class="ow-temps">
+          {ty.temps.map((c) => (
+            <span data-tyre-temp={c}>{c}°</span>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</div>

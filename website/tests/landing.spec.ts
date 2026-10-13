@@ -37,7 +37,7 @@ test.describe('Diseño responsive', () => {
         [...document.querySelectorAll('body *')]
           .filter((el) => {
             const r = el.getBoundingClientRect();
-            const clipped = el.closest('.ts, .shot, .wf-panel');
+            const clipped = el.closest('.ts, .shot, .wf-panel, .gal-tabs, .ow-fit');
             return !clipped && r.width > 0 && r.right > window.innerWidth + 1;
           })
           .map((el) => `${el.tagName}.${el.className}`),
@@ -248,5 +248,35 @@ test.describe('Foto del hero rotatoria', () => {
     await expect(img).toHaveJSProperty('complete', true);
     expect(await img.evaluate((i: HTMLImageElement) => i.currentSrc)).toContain('/nogaro.');
     await ctx.close();
+  });
+});
+
+test.describe('Galería de overlays', () => {
+  test('las pestañas cambian el widget con ratón y teclado', async ({ page }) => {
+    await mockApi(page, 200);
+    await page.goto('/#gallery');
+    const tabs = page.locator('#gallery [role="tab"]');
+    await expect(tabs).toHaveCount(8);
+    await expect(page.locator('#gal-panel-relative')).toBeVisible();
+    await page.locator('#gal-tab-cockpit').click();
+    await expect(page.locator('#gal-tab-cockpit')).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('#gal-panel-cockpit')).toBeVisible();
+    await expect(page.locator('#gal-panel-relative')).toBeHidden();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#gal-tab-fuel')).toBeFocused();
+    await expect(page.locator('#gal-panel-fuel')).toBeVisible();
+    await page.keyboard.press('End');
+    await expect(page.locator('#gal-panel-weather')).toBeVisible();
+  });
+
+  test('los widgets caben en su hueco a 375 px', async ({ page }) => {
+    await mockApi(page, 200);
+    await page.setViewportSize({ width: 375, height: 800 });
+    await page.goto('/#gallery');
+    for (const id of ['relative', 'standings', 'cockpit', 'pedals']) {
+      await page.locator(`#gal-tab-${id}`).click();
+      const over = await page.locator(`#gal-panel-${id} .ow-fit-inner`).evaluate((el) => el.getBoundingClientRect().right - window.innerWidth);
+      expect(over, id).toBeLessThanOrEqual(1);
+    }
   });
 });

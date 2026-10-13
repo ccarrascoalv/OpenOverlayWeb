@@ -1,0 +1,64 @@
+---
+// Relative de la app (Widgets/RelativePanel.xaml): banda de sesión, filas con barra de clase y pie.
+import { useT } from '../../i18n';
+import { relativeRows, session } from '../../data/preview';
+import { brandStyle, flagUrl, fmtGap, licClass } from './DriverParts';
+import { icons } from './Icons';
+const t = useT(Astro.currentLocale);
+const l = t.wl;
+---
+
+<div class="ow ow-panel ow-table is-relative" data-live="relative" style="width:640px">
+  <div class="ow-band">
+    <span class="ow-band-item"><span class="ow-micro">x</span>{session.incidents}</span>
+    <span class="ow-band-item">
+      <svg class="ow-icon" viewBox="0 0 24 24" width="14" height="14" style="color:var(--c-text-2)"><path d={icons.road} fill-rule="evenodd"></path></svg>
+      {session.trackTemp}
+    </span>
+    <span class="ow-band-item">
+      <svg class="ow-icon" viewBox="0 0 10 14" width="9" height="12" style="color:var(--c-text-2)"><path d={icons.drop}></path></svg>
+      {session.humidity}
+    </span>
+  </div>
+  {
+    relativeRows.map((r) => (
+      <div
+        class:list={['ow-row', `cls-${r.cls}`, r.isPlayer && 'is-player', r.lap && `ink-${r.lap}`]}
+        data-gap={r.gap}
+      >
+        <span class="ow-pos">{r.pos}</span>
+        <span class="ow-num">#{r.num}</span>
+        <span class="ow-brand" style={brandStyle(r.brand)} />
+        <span class="ow-name">{r.name}</span>
+        {r.penalty ? <span class:list={['ow-pen', `is-${r.penalty}`]} /> : <span />}
+        <img class="ow-flag" src={flagUrl(r.country)} alt="" width="21" height="14" loading="lazy" decoding="async" />
+        {r.pit ? (
+          <span class="ow-chip ow-badge">
+            L{r.pit.lap}
+            <i />
+            {r.pit.time}
+          </span>
+        ) : (
+          <span />
+        )}
+        <span class:list={['ow-tyre', `tyre-${r.tyre.toLowerCase()}`]}>{r.tyre}</span>
+        <span class:list={['ow-chip ow-lic', licClass(r.lic)]}>{r.lic}</span>
+        <span class="ow-ir">{r.ir}</span>
+        <span class:list={['ow-chip ow-ird', r.irDelta >= 0 ? 'is-up' : 'is-down']}>
+          <svg class="ow-caret" viewBox="0 0 10 10">
+            <path d={r.irDelta >= 0 ? 'M1.5,7 L5,3 L8.5,7' : 'M1.5,3 L5,7 L8.5,3'} />
+          </svg>
+          {Math.abs(r.irDelta)}
+        </span>
+        <span class="ow-gap" data-gap-out>
+          {fmtGap(r.gap)}
+        </span>
+      </div>
+    ))
+  }
+  <div class="ow-foot">
+    <span class="ow-band-item"><span class="ow-micro">{l.lap}</span>{session.lap}</span>
+    <span class="ow-band-items"><span class="ow-micro">{l.race}</span><span class="ow-micro">{l.sof} {session.sof}</span></span>
+    <span class="ow-band-item"><span class="ow-micro">{l.time}</span><span data-live-clock>{session.time}</span></span>
+  </div>
+</div>

@@ -1,0 +1,926 @@
+/* Widgets de la app recreados en HTML/CSS, con las medidas de la app al 100 %
+   (Themes/DesignTokens.xaml): tipos 12/13/14/18/22/29/36/45/60 px, filas de 23 px, marco de radio 8.
+   Prefijo .ow- para no chocar con el resto de la página. */
+
+.ow {
+  font-family: var(--font-display);
+  color: var(--c-text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ow-panel {
+  background: var(--c-glass);
+  border: 1px solid var(--c-border-soft);
+  border-radius: 8px;
+  box-shadow: 0 18px 40px -18px var(--c-shadow);
+  overflow: hidden;
+}
+
+.ow-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 11px;
+  background: color-mix(in srgb, var(--c-surface) 70%, transparent);
+  border-bottom: 1px solid var(--c-border-soft);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+
+.ow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-text-3);
+}
+
+.ow-dot.is-live {
+  background: var(--c-live);
+  box-shadow: 0 0 0 3px var(--c-live-soft);
+}
+
+.ow-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--c-text-2);
+}
+
+.ow-micro {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-text-3);
+}
+
+.ow-icon {
+  display: inline-block;
+  flex: none;
+  fill: currentColor;
+}
+
+/* ---------- Tablas de pilotos (Relative y Standings) ---------- */
+.ow-table {
+  padding: 8px 10px;
+}
+
+.ow-band {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 7px;
+  font-size: 14px;
+}
+
+.ow-band > :last-child {
+  justify-self: end;
+}
+
+.ow-band-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  color: var(--c-text);
+}
+
+.ow-band-items {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ow-band-item .ow-micro {
+  text-transform: uppercase;
+}
+
+.ow-row {
+  position: relative;
+  display: grid;
+  align-items: center;
+  column-gap: 6px;
+  height: 23px;
+  padding-left: 7px;
+  border-bottom: 1px solid color-mix(in srgb, var(--c-border) 45%, transparent);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text-2);
+  white-space: nowrap;
+}
+
+.ow-row::before {
+  /* Barra de clase */
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--cls);
+}
+
+.ow-row.is-player {
+  background: color-mix(in srgb, var(--c-surface-alt) 92%, transparent);
+  border-radius: 4px;
+}
+
+.ow-row.is-pit {
+  background: color-mix(in srgb, var(--c-warn) 12%, transparent);
+}
+
+.ow-row.is-pit > :not(.ow-badge) {
+  opacity: 0.7;
+}
+
+.cls-gt3 { --cls: var(--w-class-gt3); }
+.cls-gt4 { --cls: var(--w-class-gt4); }
+.cls-tcr { --cls: var(--w-class-tcr); }
+
+.ow-pos {
+  text-align: center;
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.is-player .ow-pos {
+  color: var(--c-accent);
+}
+
+.ow-num {
+  text-align: center;
+  color: var(--c-text-3);
+}
+
+.ow-brand {
+  width: 16px;
+  height: 16px;
+  justify-self: center;
+  background: var(--c-text-2);
+  -webkit-mask: var(--logo) var(--logo-pos, center) / var(--logo-size, contain) no-repeat;
+  mask: var(--logo) var(--logo-pos, center) / var(--logo-size, contain) no-repeat;
+}
+
+.ow-flag {
+  width: 21px;
+  height: 14px;
+  justify-self: center;
+  border-radius: 2px;
+  object-fit: cover;
+}
+
+.ow-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--c-text);
+}
+
+.is-player .ow-name {
+  font-weight: 700;
+}
+
+.ink-lapped,
+.ink-lapped .ow-name {
+  color: var(--w-info);
+}
+
+.ink-lapping,
+.ink-lapping .ow-name {
+  color: var(--c-error);
+}
+
+/* Chips */
+.ow-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 17px;
+  padding: 0 4px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.ow-lic {
+  justify-self: center;
+}
+
+.lic-a { color: var(--w-lic-a); }
+.lic-b { color: var(--w-lic-b); }
+.lic-c { color: var(--w-lic-c); }
+.lic-d { color: var(--w-lic-d); }
+.lic-r { color: var(--w-lic-r); }
+
+.ow-ir {
+  text-align: right;
+  color: var(--c-text-2);
+}
+
+.ow-ird {
+  justify-self: stretch;
+  border: 0;
+  height: 17px;
+  font-size: 12px;
+}
+
+.ow-ird.is-up {
+  color: var(--c-live);
+  background: var(--c-live-soft);
+}
+
+.ow-ird.is-down {
+  color: var(--c-error);
+  background: var(--c-error-soft);
+}
+
+.ow-caret {
+  width: 8px;
+  height: 8px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.ow-places {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: 13px;
+  color: var(--c-text-3);
+}
+
+.ow-places.is-up { color: var(--c-live); }
+.ow-places.is-down { color: var(--c-error); }
+
+.ow-badge {
+  justify-self: start;
+  color: var(--c-warn);
+  border-color: color-mix(in srgb, var(--c-warn) 85%, transparent);
+  background: color-mix(in srgb, var(--c-warn) 18%, transparent);
+}
+
+.ow-badge i {
+  width: 1px;
+  height: 9px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.ow-tyre {
+  justify-self: center;
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tyre-h { color: var(--c-text); }
+.tyre-w { color: var(--w-tyre-wet); }
+.tyre-s { color: var(--w-critical); }
+
+.ow-pen {
+  justify-self: center;
+  width: 22px;
+  height: 14px;
+  border: 1px solid var(--c-text-3);
+  border-radius: 3px;
+  background: var(--w-flag-black);
+}
+
+.ow-pen.is-furled {
+  background:
+    linear-gradient(to top right, transparent calc(50% - 1px), var(--c-text) 50%, transparent calc(50% + 1px)),
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--c-text) 50%, transparent calc(50% + 1px)),
+    var(--w-flag-black);
+}
+
+.ow-pen.is-meatball {
+  background: radial-gradient(circle at center, var(--w-flag-orange) 0 3.5px, transparent 4px), var(--w-flag-black);
+}
+
+.ow-gap {
+  text-align: right;
+  font-weight: 600;
+  color: var(--c-text);
+  transition: opacity var(--dur-1) var(--ease-out);
+}
+
+.ow-gap.is-tick {
+  opacity: 0.55;
+}
+
+.is-player .ow-gap {
+  color: var(--c-text-3);
+}
+
+.ow-gap.is-leader {
+  color: var(--c-text);
+}
+
+.ow-lap {
+  text-align: center;
+  color: var(--c-text-2);
+}
+
+.ow-time {
+  text-align: right;
+  color: var(--c-text-2);
+}
+
+.ow-time.is-purple { color: var(--w-special); }
+.ow-time.is-green { color: var(--c-live); }
+
+.ow-fastest {
+  justify-self: center;
+  width: 19px;
+  height: 17px;
+  color: var(--w-special);
+  border-color: var(--w-special);
+  padding: 0;
+}
+
+.ow-fastest svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.ow-foot {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ow-foot > :last-child {
+  justify-self: end;
+}
+
+.ow-classhead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 21px;
+  margin-top: 6px;
+  padding-left: 8px;
+  border-radius: 4px 0 0 4px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--cls) 55%, transparent), transparent 70%);
+  border-left: 3px solid var(--cls);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.ow-classhead span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ow-sep {
+  height: 1px;
+  margin: 10px 0 6px;
+  background: var(--c-border-soft);
+}
+
+/* ---------- Flags ---------- */
+.ow-flags {
+  padding: 4px 10px;
+}
+
+.ow-flagrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0;
+}
+
+.ow-flagrow + .ow-flagrow {
+  border-top: 1px solid var(--c-border-soft);
+}
+
+.ow-sw {
+  flex: none;
+  width: 48px;
+  height: 30px;
+  border-radius: 3px;
+}
+
+.sw-yellow { background: var(--c-warn); }
+.sw-green { background: var(--c-live); }
+.sw-white { background: var(--c-text); }
+.sw-debris {
+  background: repeating-linear-gradient(90deg, var(--c-warn) 0 8px, var(--w-flag-red) 8px 16px);
+}
+.sw-blue {
+  background:
+    linear-gradient(to top right, transparent calc(50% - 3px), var(--w-flag-orange) calc(50% - 3px) calc(50% + 3px), transparent calc(50% + 3px)),
+    var(--w-flag-blue);
+}
+.sw-checkered {
+  background: repeating-conic-gradient(var(--c-text) 0 25%, var(--c-bg) 0 50%) 0 0 / 10px 10px;
+}
+
+.ow-sw.is-waving {
+  animation: ow-blink 1s steps(1, end) infinite;
+}
+
+.ow-flagtext strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.ow-flagtext span {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text-2);
+}
+
+.ow-flagscene {
+  display: none;
+}
+
+.ow-flagscene.is-on {
+  display: block;
+  animation: ow-in var(--dur-3) var(--ease-out);
+}
+
+/* ---------- Fuel calculator ---------- */
+.ow-fuel {
+  display: grid;
+  gap: 10px;
+  padding: 10px 12px 12px;
+}
+
+.ow-fuel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.ow-fuel-big {
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ow-fuel-big small,
+.ow-fuel-foot small {
+  margin-left: 3px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--c-text-3);
+}
+
+.ow-fuel-laps {
+  text-align: right;
+}
+
+.ow-fuel-laps b {
+  display: block;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ow-meter {
+  position: relative;
+  height: 7px;
+  border-radius: 3px;
+  background: var(--c-surface-alt);
+  overflow: hidden;
+}
+
+.ow-meter > span {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: var(--c-live);
+  border-radius: 3px;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.ow-meter > i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--c-warn);
+}
+
+.ow-fuel-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.ow-fuel-stats .ow-label {
+  display: block;
+  font-size: 13px;
+}
+
+.ow-fuel-foot {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--c-border-soft);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.ow-fuel-foot > :last-child {
+  text-align: right;
+  color: var(--c-warn);
+}
+
+.ow-fuel-foot > :last-child small {
+  color: var(--c-warn);
+}
+
+/* ---------- Cockpit ---------- */
+.ow-cockpit {
+  padding: 8px 12px 10px;
+  background: color-mix(in srgb, var(--c-bg) 92%, transparent);
+  border: 1px solid var(--w-cockpit-edge);
+  border-radius: 6px;
+}
+
+.ow-lamps {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 4px;
+  margin: 0 22px 8px;
+}
+
+.ow-lamps i {
+  height: 14px;
+  transform: skewX(-20deg);
+  border-radius: 2px;
+  background: var(--lamp);
+  opacity: 0.18;
+  transition: opacity 60ms linear;
+}
+
+.ow-lamps i.is-lit {
+  opacity: 1;
+}
+
+.ow-lamps.is-blink i {
+  animation: ow-blink 160ms steps(1, end) infinite;
+}
+
+.ow-cp-grid {
+  display: grid;
+  grid-template-columns: 6px 1.15fr 1fr 0.9fr 1fr 1fr 1.1fr;
+  gap: 6px;
+  height: 128px;
+}
+
+.ow-prox {
+  border-radius: 3px;
+  background: var(--c-surface-alt);
+  overflow: hidden;
+  position: relative;
+}
+
+.ow-prox > span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18%;
+  height: 55%;
+  background: var(--c-warn);
+  border-radius: 3px;
+  transition: transform var(--dur-3) var(--ease-out), opacity var(--dur-3) var(--ease-out);
+}
+
+.ow-cp-col {
+  display: grid;
+  gap: 6px;
+}
+
+.ow-mod {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px 8px 4px 12px;
+  background: var(--w-cockpit-panel);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  min-height: 0;
+}
+
+.ow-mod::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--stripe, var(--w-cockpit-stripe));
+}
+
+.ow-mod .ow-label {
+  font-size: 12px;
+  color: var(--stripe-ink, var(--c-text-3));
+}
+
+.ow-mod b {
+  align-self: flex-end;
+  font-size: 29px;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1;
+}
+
+.ow-mod.is-hero b {
+  font-size: 60px;
+  align-self: center;
+}
+
+.ow-mod.is-gear b {
+  font-size: 80px;
+  align-self: center;
+  line-height: 0.95;
+}
+
+.ow-mod.is-delta b {
+  font-size: 36px;
+  align-self: center;
+}
+
+.ow-mod.is-delta b.is-gain { color: var(--c-live); }
+.ow-mod.is-delta b.is-loss { color: var(--c-error); }
+
+.mod-abs { --stripe: var(--c-accent); --stripe-ink: var(--c-accent); }
+.mod-tc { --stripe: var(--w-self); --stripe-ink: var(--w-self); }
+.mod-bb { --stripe: var(--w-brake-bias); --stripe-ink: var(--w-brake-bias); }
+
+/* ---------- Tires ---------- */
+.ow-tires {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: space-between;
+  gap: 18px 40px;
+  padding: 16px 26px 18px;
+}
+
+.ow-tyrebox {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.ow-tyrebox .ow-pct,
+.ow-tyrebox .ow-temps {
+  display: flex;
+  gap: 6px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ow-tyrebox .ow-temps {
+  font-weight: 500;
+  color: var(--c-text-2);
+}
+
+.ow-shell {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 88px;
+  height: 128px;
+  padding: 6px 4px;
+  border: 2px solid color-mix(in srgb, var(--c-text-3) 55%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--c-bg) 60%, transparent);
+}
+
+.ow-shell span {
+  position: relative;
+  margin: 0 1px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--c-surface-alt) 70%, transparent);
+}
+
+.ow-shell span i {
+  position: absolute;
+  inset: 0;
+  transform-origin: bottom;
+  background: linear-gradient(to top, color-mix(in srgb, var(--wear) 25%, transparent), var(--wear) 45%);
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.wear-ok { --wear: color-mix(in srgb, var(--c-live) 60%, var(--c-bg)); color: var(--c-live); }
+.wear-mid { --wear: color-mix(in srgb, var(--c-warn) 60%, var(--c-bg)); color: var(--c-warn); }
+.wear-low { --wear: color-mix(in srgb, var(--w-critical) 60%, var(--c-bg)); color: var(--w-critical); }
+
+/* ---------- Pedal trace ---------- */
+.ow-pedals {
+  display: grid;
+  grid-template-columns: auto auto auto 1fr auto;
+  align-items: center;
+  gap: 22px;
+  height: 128px;
+  padding: 8px 22px;
+}
+
+.ow-gear {
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ow-speed {
+  display: grid;
+  justify-items: center;
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ow-speed small {
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-text-3);
+}
+
+.ow-wheel {
+  width: 56px;
+  height: 56px;
+  color: var(--c-text-2);
+  transition: transform 80ms linear;
+}
+
+.ow-trace {
+  width: 100%;
+  height: 100%;
+}
+
+.ow-trace polyline {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.ow-bars {
+  display: grid;
+  grid-template-columns: repeat(3, 22px);
+  gap: 8px;
+  height: 100%;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.ow-bar {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 4px;
+}
+
+.ow-bar > span {
+  position: relative;
+  border-radius: 3px;
+  background: var(--c-surface-alt);
+  overflow: hidden;
+}
+
+.ow-bar > span i {
+  position: absolute;
+  inset: 0;
+  transform-origin: bottom;
+  background: var(--bar);
+}
+
+/* ---------- Weather ---------- */
+.ow-weather {
+  display: grid;
+  width: 230px;
+  padding: 4px 14px;
+}
+
+.ow-wsec {
+  display: grid;
+  gap: 4px;
+  padding: 12px 0;
+}
+
+.ow-wsec + .ow-wsec {
+  border-top: 1px solid var(--c-border-soft);
+}
+
+.ow-wrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ow-wbig {
+  font-size: 45px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ow-wbig small {
+  margin-left: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text-2);
+}
+
+.ow-wrain {
+  color: color-mix(in srgb, var(--c-text) 75%, var(--w-info));
+}
+
+.ow-compass {
+  justify-self: center;
+  width: 120px;
+  height: 120px;
+  margin: 6px 0;
+}
+
+.ow-wind-arrow {
+  transform-origin: 60px 60px;
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.ow-windspeed {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+.ow-windspeed small {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text-2);
+}
+
+/* ---------- Escalado para encajar en su hueco ---------- */
+.ow-fit {
+  position: relative;
+  width: 100%;
+}
+
+.ow-fit > .ow-fit-inner {
+  width: var(--fit-w);
+  transform-origin: top left;
+}
+
+@keyframes ow-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes ow-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.ow-time.is-tick { opacity: 0.55; }
+.ow-time { transition: opacity var(--dur-1) var(--ease-out); }
+
+/* Columnas de cada tabla (en CSS y no en cada fila, para no repetirlas en el HTML) */
+.is-relative .ow-row {
+  grid-template-columns: 22px 34px 20px minmax(0, 1fr) 26px 24px 74px 18px 50px 36px 42px 44px;
+}
+
+.is-standings .ow-row {
+  grid-template-columns: 18px 34px 30px 20px 24px minmax(0, 1fr) 74px 18px 36px 42px 50px 18px 58px 58px 48px 20px;
+}

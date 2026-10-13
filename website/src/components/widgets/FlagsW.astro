@@ -1,0 +1,25 @@
+---
+// Flags de la app (Widgets/FlagPanel.xaml): las banderas activas apiladas. El script cambia de escena
+// cada pocos segundos, como el simulador de banderas de la vista previa.
+import { useT } from '../../i18n';
+const t = useT(Astro.currentLocale);
+const scenes = t.wl.flagScenes;
+---
+
+<div class="ow ow-panel ow-flags" data-live="flags" style="width:320px">
+  {
+    scenes.map((scene, i) => (
+      <div class:list={['ow-flagscene', i === 0 && 'is-on']} data-flag-scene>
+        {scene.map((f) => (
+          <div class="ow-flagrow">
+            <span class:list={['ow-sw', `sw-${f.sw}`, 'waving' in f && f.waving && 'is-waving']} />
+            <span class="ow-flagtext">
+              <strong>{f.name}</strong>
+              <span>{f.desc}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    ))
+  }
+</div>

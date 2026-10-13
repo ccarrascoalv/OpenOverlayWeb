@@ -10,6 +10,8 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   build: { inlineStylesheets: 'always' },
+  // Logos y banderas como archivos, no incrustados: se repiten muchas veces en las tablas.
+  vite: { build: { assetsInlineLimit: 0 } },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'es'],

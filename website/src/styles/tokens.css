@@ -15,6 +15,30 @@
   --c-warn: #F5A524;          /* Aviso */
   --c-error: #F26D6D;         /* Error */
 
+  /* Paleta propia de los widgets de la app (Themes/DesignTokens.xaml, ViewModels/*.cs).
+     Solo se usa dentro de los mockups de widgets, para que sean idénticos a la app. */
+  --w-info: #6CB8FF;          /* Doblado (ink azul) */
+  --w-special: #B58CFF;       /* Vuelta más rápida (morado) */
+  --w-self: #4C9AFF;          /* Control de tracción */
+  --w-critical: #F04438;      /* Crítico, luces de cambio rojas */
+  --w-brake-bias: #FF8A3D;
+  --w-class-gt3: #33CEFF;
+  --w-class-gt4: #FFB238;
+  --w-class-tcr: #FF4F8B;
+  --w-lic-r: #E0413D;
+  --w-lic-d: #E08A2E;
+  --w-lic-c: #E0C93D;
+  --w-lic-b: #3DBF5C;
+  --w-lic-a: #3D7FE0;
+  --w-tyre-wet: #3D8BFF;
+  --w-flag-red: #E03131;
+  --w-flag-blue: #1C64D9;
+  --w-flag-orange: #FF7A1A;
+  --w-flag-black: #0B0D10;
+  --w-cockpit-panel: #14171B;
+  --w-cockpit-edge: #3A4149;
+  --w-cockpit-stripe: #5A646D;
+
   /* Derivados (mezclas de la paleta, nunca colores nuevos) */
   --c-on-accent: var(--c-bg);
   --c-glass: color-mix(in srgb, var(--c-bg) 84%, transparent);

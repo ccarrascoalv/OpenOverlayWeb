@@ -1,0 +1,33 @@
+---
+// Cockpit de la app (Widgets/Cockpit/CockpitDashboard.cs): luces de cambio (5 verdes, 4 amarillas,
+// 6 rojas), barra de proximidad y módulos con la esquina recortada. El script recorre las marchas.
+import { useT } from '../../i18n';
+import { cockpit } from '../../data/preview';
+const t = useT(Astro.currentLocale);
+const l = t.wl;
+const lampColor = (i: number) => (i < 5 ? 'var(--c-live)' : i < 9 ? 'var(--c-accent)' : 'var(--w-critical)');
+---
+
+<div class="ow ow-cockpit" data-live="cockpit" style="width:820px">
+  <div class="ow-lamps" data-cp="lamps">
+    {Array.from({ length: cockpit.lamps }, (_, i) => <i class:list={[i < cockpit.lit && 'is-lit']} style={`--lamp:${lampColor(i)}`} />)}
+  </div>
+  <div class="ow-cp-grid">
+    <div class="ow-prox"><span data-cp="prox"></span></div>
+    <div class="ow-mod is-hero"><span class="ow-label">{l.kmh}</span><b data-cp="speed">{cockpit.speed}</b></div>
+    <div class="ow-cp-col">
+      <div class="ow-mod"><span class="ow-label">{l.rpm}</span><b data-cp="rpm">{cockpit.rpm}</b></div>
+      <div class="ow-mod"><span class="ow-label">{l.fuelL}</span><b data-cp="fuel">{cockpit.fuel.toFixed(1)}</b></div>
+    </div>
+    <div class="ow-mod is-gear"><span class="ow-label">{l.gear}</span><b data-cp="gear">{cockpit.gear}</b></div>
+    <div class="ow-cp-col">
+      <div class="ow-mod mod-abs"><span class="ow-label">{l.abs}</span><b>{cockpit.abs}</b></div>
+      <div class="ow-mod mod-bb"><span class="ow-label">{l.bb}</span><b>{cockpit.bb}</b></div>
+    </div>
+    <div class="ow-cp-col">
+      <div class="ow-mod mod-tc"><span class="ow-label">{l.tc}</span><b>{cockpit.tc}</b></div>
+      <div class="ow-mod"><span class="ow-label">{l.inc}</span><b>{cockpit.inc}</b></div>
+    </div>
+    <div class="ow-mod is-delta"><span class="ow-label">{l.delta}</span><b class="is-gain" data-cp="delta">{cockpit.delta.toFixed(3)}</b></div>
+  </div>
+</div>

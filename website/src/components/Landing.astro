@@ -10,6 +10,7 @@ import Panel from './Panel.astro';
 import GetStarted from './GetStarted.astro';
 import Faq from './Faq.astro';
 import Footer from './Footer.astro';
+import Gallery from './Gallery.astro';
 ---
 
 <Base>
@@ -22,14 +23,26 @@ import Footer from './Footer.astro';
     <Panel />
     <GetStarted />
     <Faq />
+    <Gallery />
   </main>
   <Footer />
+  <script is:inline>
+    // Encaja los widgets en su hueco antes del primer pintado (sin saltos de maquetación).
+    document.querySelectorAll('[data-fit]').forEach(function (box) {
+      var w = Number(box.dataset.fit), max = Number(box.dataset.fitMax || 1), inner = box.firstElementChild;
+      if (!box.clientWidth) return;
+      var s = Math.min(max, box.clientWidth / w);
+      inner.style.transform = 'scale(' + s + ')';
+      box.style.height = inner.offsetHeight * s + 'px';
+    });
+  </script>
 </Base>
 
 <script>
   import { URLS } from '../config';
   import { initHeader, initLiveMockups, initReveal } from '../scripts/motion';
   import { initRelease } from '../scripts/release';
+  import { initFit, initGallery, initWidgets } from '../scripts/widgets';
 
   // Foto del hero elegida por el script en línea de Hero.astro: actualiza el circuito del mockup y el crédito.
   const hero = (window as unknown as { __ooHero?: { circuit: string | null; credit: string } }).__ooHero;
@@ -41,5 +54,8 @@ import Footer from './Footer.astro';
   initHeader();
   initReveal();
   initLiveMockups();
+  initFit();
+  initGallery();
+  initWidgets();
   initRelease(URLS.api);
 </script>

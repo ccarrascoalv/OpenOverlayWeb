@@ -172,6 +172,13 @@ const brands = Object.entries(
     transition: opacity var(--dur-1) var(--ease-out);
   }
 
+  /* Los 30 logos se descargan cuando la tarjeta entra en pantalla, no al cargar la página. */
+  :global(.js) .brands:not(:global(.is-in)) .brand-grid li {
+    -webkit-mask-image: none;
+    mask-image: none;
+    background: transparent;
+  }
+
   @media (max-width: 1000px) {
     .groups {
       grid-template-columns: minmax(0, 1fr);

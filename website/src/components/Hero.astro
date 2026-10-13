@@ -3,9 +3,10 @@ import { getImage, Image } from 'astro:assets';
 import logo from '../assets/logo-512.png';
 import { heroCredit, heroes } from '../data/heroes';
 import DownloadCta from './DownloadCta.astro';
-import Relative from './mockups/Relative.astro';
-import FuelCalc from './mockups/FuelCalc.astro';
-import Flags from './mockups/Flags.astro';
+import Fit from './widgets/Fit.astro';
+import RelativeW from './widgets/RelativeW.astro';
+import FuelW from './widgets/FuelW.astro';
+import FlagsW from './widgets/FlagsW.astro';
 import TrackSession from './mockups/TrackSession.astro';
 import { useT } from '../i18n';
 const t = useT(Astro.currentLocale);
@@ -100,9 +101,9 @@ const def = pool[0];
     <div class="hero-scene" role="img" aria-label={t.hero.sceneLabel}>
       <div class="scene" aria-hidden="true" data-scene>
         <TrackSession class="w w-track" style="--i: 0" />
-        <Flags class="w w-flags" style="--i: 1" />
-        <Relative class="w w-rel" style="--i: 2" />
-        <FuelCalc class="w w-fuel" style="--i: 3" />
+        <Fit w={640} class="w w-rel" style="--i: 1"><RelativeW /></Fit>
+        <Fit w={320} class="w w-flags" style="--i: 2"><FlagsW /></Fit>
+        <Fit w={300} class="w w-fuel" style="--i: 3"><FuelW /></Fit>
       </div>
     </div>
   </div>
@@ -235,9 +236,9 @@ const def = pool[0];
   .scene {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    grid-template-rows: auto auto 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: var(--space-4) var(--space-5);
+    align-items: start;
   }
 
   .scene :global(.w) {
@@ -245,29 +246,13 @@ const def = pool[0];
     animation-delay: calc(var(--i) * -1.7s);
   }
 
-  .scene :global(.w-track) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin-bottom: var(--space-4);
-  }
-
-  .scene :global(.w-flags) {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: start;
-  }
-
+  .scene :global(.w-track),
   .scene :global(.w-rel) {
-    grid-column: 2;
-    grid-row: 2 / span 2;
-    align-self: start;
-    margin-top: var(--space-6);
+    grid-column: 1 / -1;
   }
 
-  .scene :global(.w-fuel) {
-    grid-column: 1;
-    grid-row: 3;
-    align-self: start;
+  .scene :global(.w-track) {
+    margin-bottom: var(--space-2);
   }
 
   @keyframes float {
@@ -303,33 +288,12 @@ const def = pool[0];
       gap: var(--space-3);
     }
 
-    .scene :global(.w-flags),
-    .scene :global(.w-fuel),
-    .scene :global(.w-rel) {
-      margin-top: 0;
-    }
-
     .scene {
       grid-template-columns: minmax(0, 1fr);
     }
 
     .scene :global(.w-track) {
       margin-bottom: 0;
-    }
-
-    .scene :global(.w-rel) {
-      grid-column: 1 / -1;
-      grid-row: 2;
-    }
-
-    .scene :global(.w-flags) {
-      grid-column: 1 / -1;
-      grid-row: 3;
-    }
-
-    .scene :global(.w-fuel) {
-      grid-column: 1 / -1;
-      grid-row: 4;
     }
   }
 </style>

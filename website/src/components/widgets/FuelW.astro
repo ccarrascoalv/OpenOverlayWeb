@@ -1,0 +1,49 @@
+---
+// Fuel calculator de la app (Widgets/FuelCalculatorPanel.xaml), con los datos de su vista previa:
+// unos litros corto para acabar, así que el repostaje sale en ámbar.
+import { useT } from '../../i18n';
+import { fuel } from '../../data/preview';
+const t = useT(Astro.currentLocale);
+const l = t.wl;
+---
+
+<div
+  class="ow ow-panel"
+  data-live="fuel"
+  data-left={fuel.left}
+  data-capacity={fuel.capacity}
+  data-avg={fuel.avg}
+  data-finish={fuel.toFinish}
+  style="width:300px"
+>
+  <div class="ow-head">{l.fuelTitle}<span class="ow-dot"></span></div>
+  <div class="ow-fuel">
+    <div class="ow-fuel-top">
+      <div>
+        <span class="ow-label">{l.fuelLeft}</span>
+        <div class="ow-fuel-big"><span data-fuel="left">{fuel.left.toFixed(1)}</span><small>L</small></div>
+      </div>
+      <div class="ow-fuel-laps">
+        <span class="ow-label">{l.lapsLeft}</span>
+        <b data-fuel="laps">{(fuel.left / fuel.avg).toFixed(1)}</b>
+      </div>
+    </div>
+    <div class="ow-meter">
+      <span data-fuel="level" style={`transform:scaleX(${fuel.left / fuel.capacity})`}></span>
+      <i style={`left:${(fuel.toFinish / fuel.capacity) * 100}%`}></i>
+    </div>
+    <div>
+      <span class="ow-label">{l.perLap}</span>
+      <div class="ow-fuel-stats">
+        <span><span class="ow-label">{l.last}</span>{fuel.last.toFixed(2)}</span>
+        <span><span class="ow-label">{l.avg}</span>{fuel.avg.toFixed(2)}</span>
+        <span><span class="ow-label">{l.min}</span>{fuel.min.toFixed(2)}</span>
+        <span><span class="ow-label">{l.max}</span>{fuel.max.toFixed(2)}</span>
+      </div>
+    </div>
+    <div class="ow-fuel-foot">
+      <span><span class="ow-label" style="display:block">{l.toFinish}</span>{fuel.toFinish.toFixed(1)}<small>L</small></span>
+      <span><span class="ow-label" style="display:block">{l.refuel}</span>+<span data-fuel="refuel">{Math.ceil(fuel.toFinish - fuel.left)}</span><small>L</small></span>
+    </div>
+  </div>
+</div>

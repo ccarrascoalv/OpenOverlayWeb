@@ -1,0 +1,32 @@
+---
+// Pedal trace de la app (Widgets/PedalTracePanel.xaml): marcha, velocidad, volante, la traza de
+// acelerador (verde), freno (rojo, ámbar donde muerde el ABS) y embrague (azul), y las barras.
+import { useT } from '../../i18n';
+import { pedalTrace } from '../../data/preview';
+const t = useT(Astro.currentLocale);
+const tr = pedalTrace(120);
+const pts = (a: number[]) => a.map((v, i) => `${((i / (a.length - 1)) * 400).toFixed(1)},${(4 + (1 - v) * 92).toFixed(1)}`).join(' ');
+---
+
+<div class="ow ow-panel ow-pedals" data-live="pedals" style="width:820px">
+  <span class="ow-gear" data-pd="gear">3</span>
+  <span class="ow-speed"><span data-pd="speed">128</span><small>{t.wl.kph}</small></span>
+  <svg class="ow-wheel" viewBox="0 0 56 56" data-pd="wheel" aria-hidden="true">
+    <circle cx="28" cy="28" r="24" fill="none" stroke="currentColor" stroke-width="6"></circle>
+    <path d="M28 4 a24 24 0 0 1 12 3.2" fill="none" stroke="var(--c-error)" stroke-width="6"></path>
+    <circle cx="28" cy="30" r="6" fill="currentColor"></circle>
+    <path d="M6 26 L22 28 M50 26 L34 28 M28 36 L28 51" stroke="currentColor" stroke-width="6" stroke-linecap="round"></path>
+  </svg>
+  <svg class="ow-trace" viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true">
+    <line x1="0" y1="50" x2="400" y2="50" stroke="var(--c-border-soft)" stroke-width="1" vector-effect="non-scaling-stroke"></line>
+    <polyline data-pd="clutch" stroke="var(--w-info)" points={pts(tr.clutch)}></polyline>
+    <polyline data-pd="throttle" stroke="var(--c-live)" points={pts(tr.throttle)}></polyline>
+    <polyline data-pd="brake" stroke="var(--c-error)" points={pts(tr.brake)}></polyline>
+    <polyline data-pd="abs" stroke="var(--c-accent)" points=""></polyline>
+  </svg>
+  <div class="ow-bars">
+    <div class="ow-bar" style="--bar:var(--w-info)"><span data-pd="v-clutch">0</span><span><i data-pd="b-clutch" style="transform:scaleY(0)"></i></span></div>
+    <div class="ow-bar" style="--bar:var(--c-error)"><span data-pd="v-brake">0</span><span><i data-pd="b-brake" style="transform:scaleY(0)"></i></span></div>
+    <div class="ow-bar" style="--bar:var(--c-live)"><span data-pd="v-throttle">100</span><span><i data-pd="b-throttle" style="transform:scaleY(1)"></i></span></div>
+  </div>
+</div>
