@@ -1,7 +1,7 @@
 ---
 import { getImage, Image } from 'astro:assets';
 import logo from '../assets/logo-512.png';
-import { heroes } from '../data/heroes';
+import { heroCredit, heroes } from '../data/heroes';
 import DownloadCta from './DownloadCta.astro';
 import Relative from './mockups/Relative.astro';
 import FuelCalc from './mockups/FuelCalc.astro';
@@ -29,7 +29,7 @@ const pool = await Promise.all(
       filter: `saturate(1.1) brightness(${h.brightness})`,
       flip: !!h.flip,
       circuit: h.circuit ?? null,
-      credit: `${h.title[lang]} — ${h.author} (Unsplash)`,
+      credit: heroCredit(h, lang),
     };
   }),
 );

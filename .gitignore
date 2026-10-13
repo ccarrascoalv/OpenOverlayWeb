@@ -12,3 +12,6 @@ dist/
 .astro/
 test-results/
 playwright-report/
+
+# Originales de las capturas del hero (se usan las versiones JPG)
+/website/src/assets/heroes/*.png

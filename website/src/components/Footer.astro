@@ -4,11 +4,11 @@ import logo from '../assets/logo-512.png';
 import { useT } from '../i18n';
 const t = useT(Astro.currentLocale);
 import { URLS } from '../config';
-import { heroes } from '../data/heroes';
+import { heroCredit, heroes } from '../data/heroes';
 const f = t.footer;
 // Crédito de la foto por defecto; el script de la página lo cambia por el de la foto que se muestra.
 const h = heroes[0];
-const defaultCredit = `${h.title[t.lang as 'en' | 'es']} — ${h.author} (Unsplash)`;
+const defaultCredit = heroCredit(h, t.lang as 'en' | 'es');
 ---
 
 <footer class="site-footer">
