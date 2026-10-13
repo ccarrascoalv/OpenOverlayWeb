@@ -103,7 +103,6 @@ const def = pool[0];
         <Flags class="w w-flags" style="--i: 1" />
         <Relative class="w w-rel" style="--i: 2" />
         <FuelCalc class="w w-fuel" style="--i: 3" />
-        <span class="scene-note">{t.hero.sampleNote}</span>
       </div>
     </div>
   </div>
@@ -269,18 +268,6 @@ const def = pool[0];
     grid-column: 1;
     grid-row: 3;
     align-self: start;
-  }
-
-  .scene-note {
-    position: absolute;
-    right: 0;
-    bottom: calc(-1 * var(--space-6));
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--c-text-3);
   }
 
   @keyframes float {

@@ -15,3 +15,7 @@ playwright-report/
 
 # Originales de las capturas del hero (se usan las versiones JPG)
 /website/src/assets/heroes/*.png
+# Imágenes sin licencia para la web (no publicar)
+/website/src/assets/heroes/bcn.jpg
+/website/src/assets/heroes/singapur.jpg
+/website/src/assets/heroes/daytona.jpg

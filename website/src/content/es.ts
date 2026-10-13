@@ -48,7 +48,6 @@ export const es: Content = {
     subtitle:
       'Widgets flotantes sobre el simulador — relative, clasificación, combustible, banderas, clima y más — que configuras en un panel con vista previa en directo.',
     sceneLabel: 'Ejemplo de los widgets de OpenOverlay sobre iRacing, con datos de ejemplo',
-    sampleNote: 'Datos de ejemplo',
   },
 
   // Datos de ejemplo de los mockups. Son ficticios, solo para ilustrar.

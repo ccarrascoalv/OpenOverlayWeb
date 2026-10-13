@@ -48,7 +48,6 @@ export const en = {
     subtitle:
       'Floating widgets over the sim — relative, standings, fuel, flags, weather and more — set up in a control panel with a live preview.',
     sceneLabel: 'Example of OpenOverlay widgets over iRacing, with sample data',
-    sampleNote: 'Sample data',
   },
 
   // Sample data for the mockups. Fictional, for illustration only.
