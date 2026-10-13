@@ -1,7 +1,9 @@
 ---
 import { Image, Picture } from 'astro:assets';
 import logo from '../assets/logo-512.png';
-import spa from '../assets/spa2.jpg';
+// Foto de fondo: circuito de Nogaro (Francia) al amanecer, de Gabriel Weyand (Unsplash, licencia Unsplash).
+// https://unsplash.com/photos/k39Bj2OOFlA
+import heroPhoto from '../assets/hero-nogaro.jpg';
 import DownloadCta from './DownloadCta.astro';
 import Relative from './mockups/Relative.astro';
 import FuelCalc from './mockups/FuelCalc.astro';
@@ -14,10 +16,11 @@ const t = useT(Astro.currentLocale);
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-bg" aria-hidden="true">
     <Picture
-      src={spa}
+      src={heroPhoto}
       alt=""
       formats={['avif', 'webp']}
-      widths={[640, 1024, 1600, 1920]}
+      widths={[640, 1024, 1600, 1920, 2560, 3200]}
+      quality={70}
       sizes="100vw"
       loading="eager"
       fetchpriority="high"
@@ -83,16 +86,16 @@ const t = useT(Astro.currentLocale);
 
   .hero-bg :global(img) {
     object-fit: cover;
-    object-position: 60% 70%;
-    filter: saturate(0.55) brightness(0.8);
+    object-position: 30% 55%;
+    filter: saturate(1.1) brightness(0.85);
   }
 
   .hero-shade {
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(90deg, var(--c-bg) 0%, color-mix(in srgb, var(--c-bg) 90%, transparent) 34%, color-mix(in srgb, var(--c-bg) 40%, transparent) 70%, color-mix(in srgb, var(--c-bg) 55%, transparent) 100%),
-      linear-gradient(180deg, color-mix(in srgb, var(--c-bg) 55%, transparent) 0%, transparent 30%, transparent 70%, var(--c-bg) 100%);
+      linear-gradient(90deg, var(--c-bg) 0%, color-mix(in srgb, var(--c-bg) 85%, transparent) 28%, color-mix(in srgb, var(--c-bg) 25%, transparent) 58%, transparent 100%),
+      linear-gradient(180deg, color-mix(in srgb, var(--c-bg) 55%, transparent) 0%, transparent 30%, transparent 90%, var(--c-bg) 100%);
   }
 
   .hero-grid {
@@ -251,7 +254,7 @@ const t = useT(Astro.currentLocale);
 
     .hero-shade {
       background:
-        linear-gradient(180deg, var(--c-bg) 0%, color-mix(in srgb, var(--c-bg) 92%, transparent) 45%, color-mix(in srgb, var(--c-bg) 45%, transparent) 70%, var(--c-bg) 100%);
+        linear-gradient(180deg, var(--c-bg) 0%, color-mix(in srgb, var(--c-bg) 92%, transparent) 42%, color-mix(in srgb, var(--c-bg) 30%, transparent) 72%, var(--c-bg) 100%);
     }
 
     .hero-scene {

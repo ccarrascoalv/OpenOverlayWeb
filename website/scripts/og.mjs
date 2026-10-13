@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const here = (p) => fileURLToPath(new URL(p, import.meta.url));
 const tokens = await readFile(here('../src/styles/tokens.css'), 'utf8');
 const logo = (await readFile(here('../src/assets/logo-512.png'))).toString('base64');
-const spa = (await sharp(here('../src/assets/spa2.jpg')).resize(1200).modulate({ saturation: 0.55, brightness: 0.8 }).jpeg({ quality: 80 }).toBuffer()).toString('base64');
+const spa = (await sharp(here('../src/assets/hero-nogaro.jpg')).resize(1200).modulate({ saturation: 1.1, brightness: 0.85 }).jpeg({ quality: 80 }).toBuffer()).toString('base64');
 const b64 = async (p) => (await readFile(p)).toString('base64');
 const font = `data:font/woff2;base64,${await b64(here('../node_modules/@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-700-normal.woff2'))}`;
 const font6 = `data:font/woff2;base64,${await b64(here('../node_modules/@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2'))}`;
@@ -18,7 +18,7 @@ ${tokens}
 @font-face { font-family: 'Barlow Semi Condensed'; font-weight: 700; src: url(${font}); }
 @font-face { font-family: 'Barlow Semi Condensed'; font-weight: 600; src: url(${font6}); }
 body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--c-bg); font-family: var(--font-display); }
-.bg { position: absolute; inset: 0; background: url(data:image/jpeg;base64,${spa}) 60% 70% / cover; }
+.bg { position: absolute; inset: 0; background: url(data:image/jpeg;base64,${spa}) 30% 55% / cover; }
 .shade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--c-bg) 30%, color-mix(in srgb, var(--c-bg) 55%, transparent) 100%); }
 .c { position: absolute; left: 80px; top: 80px; right: 80px; display: grid; gap: 28px; }
 img { width: 96px; height: 96px; border-radius: 20px; }

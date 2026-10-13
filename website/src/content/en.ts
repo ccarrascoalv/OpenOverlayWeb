@@ -86,7 +86,7 @@ export const en = {
     },
     track: {
       title: 'Track & session',
-      circuit: 'Spa-Francorchamps',
+      circuit: 'Nogaro',
       session: 'Race',
       trackTemp: 'Track',
       airTemp: 'Air',
@@ -327,7 +327,7 @@ export const en = {
       { label: 'MIT licence', key: 'license' },
     ],
     creditsTitle: 'Credits',
-    credits: 'YamlDotNet (MIT), Velopack (MIT), SharpVectors (BSD-3-Clause), Barlow Semi Condensed (SIL OFL), car brand logos mostly from Simple Icons (CC0).',
+    credits: 'YamlDotNet (MIT), Velopack (MIT), SharpVectors (BSD-3-Clause), Barlow Semi Condensed (SIL OFL), car brand logos mostly from Simple Icons (CC0). Hero photo: Circuit de Nogaro at sunrise by Gabriel Weyand (Unsplash).',
     copyright: '© Andreu Marc Servera Lauder and contributors (OpenOverlay contributors).',
     legal:
       'OpenOverlay is an unofficial, fan-made tool and is not affiliated with or endorsed by iRacing Motorsport Simulations. Car brand logos belong to their respective owners and are used only to identify each car’s make.',
