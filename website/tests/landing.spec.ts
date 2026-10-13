@@ -215,3 +215,38 @@ test('el aviso legal aparece literal en el pie (español, LANDING-PAGE.md §10)'
     'OpenOverlay es una herramienta no oficial hecha por aficionados y no está afiliada ni respaldada por iRacing Motorsport Simulations. Los logos de las marcas son de sus respectivos propietarios y solo se usan para identificar la marca de cada coche.',
   );
 });
+
+test.describe('Foto del hero rotatoria', () => {
+  test('carga una foto del pool y el crédito y el circuito cuadran con ella', async ({ page }) => {
+    await mockApi(page, 200);
+    await page.goto('/?hero=spa');
+    const img = page.locator('[data-hero-picture] img');
+    await expect(img).toHaveJSProperty('complete', true);
+    expect(await img.evaluate((i: HTMLImageElement) => i.currentSrc)).toContain('/spa.');
+    await expect(page.locator('[data-hero-circuit]')).toHaveText('Spa-Francorchamps');
+    await expect(page.locator('[data-hero-credit]')).toContainText('Chris Kursikowski');
+  });
+
+  test('no repite la misma foto al recargar en la misma sesión', async ({ page }) => {
+    await mockApi(page, 200);
+    await page.goto('/');
+    let last = await page.evaluate(() => sessionStorage.getItem('oo-hero'));
+    for (let i = 0; i < 6; i++) {
+      await page.reload();
+      const now = await page.evaluate(() => sessionStorage.getItem('oo-hero'));
+      expect(now).not.toBe(last);
+      last = now;
+    }
+  });
+
+  test('sin JavaScript se ve la foto por defecto', async ({ browser }) => {
+    const ctx = await browser.newContext({ javaScriptEnabled: false });
+    const page = await ctx.newPage();
+    await page.goto('/');
+    const img = page.locator('.hero-bg noscript img');
+    await expect(img).toBeVisible();
+    await expect(img).toHaveJSProperty('complete', true);
+    expect(await img.evaluate((i: HTMLImageElement) => i.currentSrc)).toContain('/nogaro.');
+    await ctx.close();
+  });
+});

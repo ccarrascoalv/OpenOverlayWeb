@@ -1,9 +1,7 @@
 ---
-import { Image, Picture } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import logo from '../assets/logo-512.png';
-// Foto de fondo: circuito de Nogaro (Francia) al amanecer, de Gabriel Weyand (Unsplash, licencia Unsplash).
-// https://unsplash.com/photos/k39Bj2OOFlA
-import heroPhoto from '../assets/hero-nogaro.jpg';
+import { heroes } from '../data/heroes';
 import DownloadCta from './DownloadCta.astro';
 import Relative from './mockups/Relative.astro';
 import FuelCalc from './mockups/FuelCalc.astro';
@@ -11,21 +9,70 @@ import Flags from './mockups/Flags.astro';
 import TrackSession from './mockups/TrackSession.astro';
 import { useT } from '../i18n';
 const t = useT(Astro.currentLocale);
+const lang = t.lang as 'en' | 'es';
+
+// Versiones optimizadas de cada foto del pool (AVIF y WebP en varios anchos, JPEG de respaldo).
+const widths = [640, 1024, 1600, 1920, 2560, 3200];
+const pool = await Promise.all(
+  heroes.map(async (h) => {
+    const [avif, webp, jpg] = await Promise.all([
+      getImage({ src: h.image, widths, format: 'avif', quality: 70 }),
+      getImage({ src: h.image, widths, format: 'webp', quality: 70 }),
+      getImage({ src: h.image, width: 1600, format: 'jpg', quality: 75 }),
+    ]);
+    return {
+      id: h.id,
+      avif: avif.srcSet.attribute,
+      webp: webp.srcSet.attribute,
+      src: jpg.src,
+      position: h.position,
+      filter: `saturate(1.1) brightness(${h.brightness})`,
+      flip: !!h.flip,
+      circuit: h.circuit ?? null,
+      credit: `${h.title[lang]} — ${h.author} (Unsplash)`,
+    };
+  }),
+);
+const def = pool[0];
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="hero-bg" aria-hidden="true">
-    <Picture
-      src={heroPhoto}
-      alt=""
-      formats={['avif', 'webp']}
-      widths={[640, 1024, 1600, 1920, 2560, 3200]}
-      quality={70}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-      class="hero-photo"
-    />
+    {/* Sin srcset en el HTML: el script de abajo elige la foto antes de que el navegador empiece a
+        descargar nada, así nunca se baja una foto que luego no se usa. */}
+    <picture data-hero-picture>
+      <source type="image/avif" sizes="100vw" />
+      <source type="image/webp" sizes="100vw" />
+      <img alt="" decoding="async" fetchpriority="high" class="hero-photo" />
+    </picture>
+    <noscript>
+      <picture>
+        <source type="image/avif" srcset={def.avif} sizes="100vw" />
+        <source type="image/webp" srcset={def.webp} sizes="100vw" />
+        <img src={def.src} alt="" class="hero-photo" style={`object-position:${def.position};filter:${def.filter}`} />
+      </picture>
+    </noscript>
+    <script is:inline define:vars={{ pool }}>
+      var last = null;
+      try { last = sessionStorage.getItem('oo-hero'); } catch (e) {}
+      var options = pool.filter(function (p) { return p.id !== last; });
+      if (!options.length) options = pool;
+      var h = options[Math.floor(Math.random() * options.length)];
+      // ?hero=<id> fuerza una foto concreta (para revisarlas una a una).
+      var forced = new URLSearchParams(location.search).get('hero');
+      pool.forEach(function (p) { if (p.id === forced) h = p; });
+      try { sessionStorage.setItem('oo-hero', h.id); } catch (e) {}
+      var pic = document.querySelector('[data-hero-picture]');
+      var s = pic.querySelectorAll('source');
+      var img = pic.querySelector('img');
+      s[0].srcset = h.avif;
+      s[1].srcset = h.webp;
+      img.style.objectPosition = h.position;
+      img.style.filter = h.filter;
+      if (h.flip) img.classList.add('is-flipped');
+      img.src = h.src;
+      window.__ooHero = h;
+    </script>
     <div class="hero-shade"></div>
   </div>
 
@@ -86,8 +133,10 @@ const t = useT(Astro.currentLocale);
 
   .hero-bg :global(img) {
     object-fit: cover;
-    object-position: 30% 55%;
-    filter: saturate(1.1) brightness(0.85);
+  }
+
+  .hero-bg :global(img.is-flipped) {
+    transform: scaleX(-1);
   }
 
   .hero-shade {

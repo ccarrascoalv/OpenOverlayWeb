@@ -12,7 +12,7 @@ const m = t.mock.track;
 
 <div class:list={['ts-wrap', cls]} style={style}>
 <div class="ts" data-mock="track">
-  <span class="ts-item ts-circuit"><span class="ts-live" aria-hidden="true"></span>{m.circuit}</span>
+  <span class="ts-item ts-circuit"><span class="ts-live" aria-hidden="true"></span><span data-hero-circuit>{m.circuit}</span></span>
   <span class="ts-item ts-session">{m.session}</span>
   <span class="ts-item ts-temp"><small>{m.trackTemp}</small>31 °C</span>
   <span class="ts-item ts-temp"><small>{m.airTemp}</small>19 °C</span>

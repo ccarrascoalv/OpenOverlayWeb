@@ -24,6 +24,7 @@ Landing page de descarga de OpenOverlay. Astro con salida estática, CSS propio 
   - Para añadir un idioma: crea `src/content/<código>.ts`, regístralo en `src/i18n/index.ts` y en `astro.config.mjs`, y añade `src/pages/<código>/index.astro`.
 - **Enlaces y releases:** `src/config.ts`. La web no muestra número de versión: el botón apunta siempre a `/releases/latest/download/…`, que GitHub redirige a la última release, así que no hay que tocar nada al publicar una versión nueva.
   - `RELEASE_STATUS`: `'published'` (el botón descarga el instalador) o `'none'` (el botón dice "Coming soon" y enlaza a las releases). Además, si la API de GitHub responde que no hay ninguna release, el botón cambia solo.
+- **Fotos de fondo del hero:** `src/data/heroes.ts`. En cada visita se elige una al azar (sin repetir la anterior en la misma sesión); la primera es la de por defecto, sin JavaScript y en la imagen para compartir. Para añadir una, copia la imagen a `src/assets/heroes/` (3000 px de ancho o más, licencia libre) y añade su entrada con autor, encuadre y brillo. Para revisar una concreta: `/?hero=<id>`.
 - **Colores:** `src/styles/tokens.css` (paleta de LANDING-PAGE.md §1). Es el único archivo con colores literales.
 - **Estilo de los widgets:** `../style-widgets.md`.
 

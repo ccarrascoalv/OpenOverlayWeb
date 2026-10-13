@@ -327,7 +327,8 @@ export const es: Content = {
       { label: 'Licencia MIT', key: 'license' },
     ],
     creditsTitle: 'Créditos',
-    credits: 'YamlDotNet (MIT), Velopack (MIT), SharpVectors (BSD-3-Clause), Barlow Semi Condensed (SIL OFL), logos de marcas mayoritariamente de Simple Icons (CC0). Foto de portada: circuito de Nogaro al amanecer, de Gabriel Weyand (Unsplash).',
+    credits: 'YamlDotNet (MIT), Velopack (MIT), SharpVectors (BSD-3-Clause), Barlow Semi Condensed (SIL OFL), logos de marcas mayoritariamente de Simple Icons (CC0).',
+    photoCredit: 'Foto de portada:',
     copyright: '© Andreu Marc Servera Lauder y colaboradores (OpenOverlay contributors).',
     legal:
       'OpenOverlay es una herramienta no oficial hecha por aficionados y no está afiliada ni respaldada por iRacing Motorsport Simulations. Los logos de las marcas son de sus respectivos propietarios y solo se usan para identificar la marca de cada coche.',

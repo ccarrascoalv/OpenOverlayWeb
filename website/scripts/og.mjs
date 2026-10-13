@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const here = (p) => fileURLToPath(new URL(p, import.meta.url));
 const tokens = await readFile(here('../src/styles/tokens.css'), 'utf8');
 const logo = (await readFile(here('../src/assets/logo-512.png'))).toString('base64');
-const spa = (await sharp(here('../src/assets/hero-nogaro.jpg')).resize(1200).modulate({ saturation: 1.1, brightness: 0.85 }).jpeg({ quality: 80 }).toBuffer()).toString('base64');
+const spa = (await sharp(here('../src/assets/heroes/nogaro.jpg')).resize(1200).modulate({ saturation: 1.1, brightness: 0.85 }).jpeg({ quality: 80 }).toBuffer()).toString('base64');
 const b64 = async (p) => (await readFile(p)).toString('base64');
 const font = `data:font/woff2;base64,${await b64(here('../node_modules/@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-700-normal.woff2'))}`;
 const font6 = `data:font/woff2;base64,${await b64(here('../node_modules/@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2'))}`;

@@ -31,6 +31,13 @@ import Footer from './Footer.astro';
   import { initHeader, initLiveMockups, initReveal } from '../scripts/motion';
   import { initRelease } from '../scripts/release';
 
+  // Foto del hero elegida por el script en línea de Hero.astro: actualiza el circuito del mockup y el crédito.
+  const hero = (window as unknown as { __ooHero?: { circuit: string | null; credit: string } }).__ooHero;
+  if (hero) {
+    if (hero.circuit) document.querySelectorAll('[data-hero-circuit]').forEach((el) => (el.textContent = hero.circuit));
+    document.querySelectorAll('[data-hero-credit]').forEach((el) => (el.textContent = hero.credit));
+  }
+
   initHeader();
   initReveal();
   initLiveMockups();

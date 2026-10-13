@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "website/src/components/Hero.astro"
+        ],
+        "createdAt": "2026-10-13T20:58:38.833Z",
+        "reason": "Claude: hero <img> gets its src from the inline rotation script right after it; <noscript> holds the default image"
+      }
+    ]
+  }
+}
