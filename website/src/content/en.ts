@@ -46,7 +46,7 @@ export const en = {
     titleA: 'Telemetry overlay for iRacing.',
     titleB: 'Free and open source.',
     subtitle:
-      'Floating widgets over the sim — relative, standings, fuel, flags, weather and more — set up in a control panel with a live preview.',
+      'Relative, standings, fuel, flags, weather and seven more widgets over the sim, set up in a control panel with a live preview.',
     sceneLabel: 'Example of OpenOverlay widgets over iRacing, with sample data',
   },
 

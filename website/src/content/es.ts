@@ -46,7 +46,7 @@ export const es: Content = {
     titleA: 'Overlay de telemetría para iRacing.',
     titleB: 'Gratis y de código abierto.',
     subtitle:
-      'Widgets flotantes sobre el simulador — relative, clasificación, combustible, banderas, clima y más — que configuras en un panel con vista previa en directo.',
+      'Relative, clasificación, combustible, banderas, clima y siete widgets más sobre el simulador, que configuras en un panel con vista previa en vivo.',
     sceneLabel: 'Ejemplo de los widgets de OpenOverlay sobre iRacing, con datos de ejemplo',
   },
 
