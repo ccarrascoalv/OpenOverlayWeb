@@ -238,7 +238,7 @@ export const en = {
   },
 
   panel: {
-    title: 'A control panel that looks the way you race.',
+    title: 'Everything is set up in the control panel.',
     intro: 'Set up every widget with a live preview and save your setups as layouts.',
     control: {
       title: 'Control panel',

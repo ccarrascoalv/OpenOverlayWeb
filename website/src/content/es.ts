@@ -238,7 +238,7 @@ export const es: Content = {
   },
 
   panel: {
-    title: 'Un panel de control que se ve como corres.',
+    title: 'Todo se configura desde el panel de control.',
     intro: 'Configura cada widget con vista previa en vivo y guarda tus configuraciones como layouts.',
     control: {
       title: 'Panel de control',
