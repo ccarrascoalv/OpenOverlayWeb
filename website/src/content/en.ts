@@ -155,13 +155,13 @@ export const en = {
   },
 
   features: {
-    title: 'Everything you need on track. Nothing you don’t.',
-    intro: 'Built for racing without distractions, without subscriptions, and without your data leaving your PC.',
+    title: 'Free, and nothing leaves your PC.',
+    intro: 'It reads iRacing’s telemetry on your PC and draws the widgets on top of the sim.',
     items: [
       {
         figure: '€0',
         title: 'Free and open source',
-        text: 'MIT licence. No subscription and no account: download, install, race.',
+        text: 'MIT licence. No subscription and no account.',
       },
       {
         figure: '100%',
@@ -171,7 +171,7 @@ export const en = {
       {
         figure: 'Read-only',
         title: 'Safe',
-        text: 'It uses the public telemetry interface iRacing provides for third-party tools — the same one SimHub, CrewChief and RaceLab use. It never touches game files or memory.',
+        text: 'It uses the public telemetry interface iRacing provides for third-party tools, the same one SimHub, CrewChief and RaceLab use. It never touches game files or memory.',
       },
       {
         figure: '12',

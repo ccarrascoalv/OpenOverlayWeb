@@ -155,13 +155,13 @@ export const es: Content = {
   },
 
   features: {
-    title: 'Todo lo que necesitas en pista. Nada que no.',
-    intro: 'Pensado para correr sin distracciones, sin suscripciones y sin que tus datos salgan de tu PC.',
+    title: 'Gratis, y nada sale de tu PC.',
+    intro: 'Lee la telemetría de iRacing en tu PC y dibuja los widgets encima del simulador.',
     items: [
       {
         figure: '0 €',
         title: 'Gratis y open source',
-        text: 'Licencia MIT. Sin suscripción y sin cuenta: descargas, instalas y corres.',
+        text: 'Licencia MIT. Sin suscripción y sin cuenta.',
       },
       {
         figure: '100 %',
