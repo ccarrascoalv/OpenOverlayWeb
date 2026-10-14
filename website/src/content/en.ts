@@ -281,7 +281,7 @@ export const en = {
   },
 
   start: {
-    title: 'Up and running in four steps.',
+    title: 'Four steps to your first session.',
     intro: 'Requirements: 64-bit Windows 10 or 11 and iRacing installed.',
     install: {
       title: 'Download and install',
