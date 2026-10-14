@@ -248,7 +248,7 @@ export const es: Content = {
         'Buscador de cualquier ajuste, barra lateral plegable, tamaño de interfaz ajustable y restablecer valores por widget.',
         'Multidioma: sigue el idioma de tu Windows y puedes cambiarlo desde los ajustes.',
       ],
-      mockLabel: 'Ilustración del panel de control de OpenOverlay',
+      alt: 'El panel de control de OpenOverlay: la página de Relative con sus columnas y la vista previa en vivo',
     },
     layouts: {
       title: 'Layouts',
@@ -258,7 +258,7 @@ export const es: Content = {
         'Exporta e importa layouts como archivo para compartirlos.',
         'Atajo propio por layout y atajos globales para abrir/cerrar, siguiente/anterior y editar.',
       ],
-      mockLabel: 'Ilustración del editor de layouts de OpenOverlay',
+      alt: 'El editor de layouts de OpenOverlay: los widgets sobre un lienzo a la resolución del monitor, con las propiedades del widget seleccionado',
     },
     comfort: {
       title: 'Comodidad',
@@ -277,30 +277,6 @@ export const es: Content = {
         'Ajustes guardados a prueba de cierres inesperados, con copia de seguridad.',
         'Logs locales, «Copiar diagnóstico» y «Exportar informe» para reportar bugs.',
       ],
-    },
-    // Textos de los mockups del panel (ilustrativos).
-    mock: {
-      appName: 'OpenOverlay',
-      search: 'Buscar ajustes',
-      nav: ['Inicio', 'Relative', 'Standings', 'Cockpit', 'Fuel calculator', 'Flags', 'Weather', 'Layouts'],
-      activeIndex: 1,
-      status: 'En vivo',
-      preview: 'Vista previa',
-      settings: [
-        { label: 'Tamaño', value: '110 %' },
-        { label: 'Opacidad del fondo', value: '80 %' },
-        { label: 'Filas delante / detrás', value: '3 / 3' },
-      ],
-      toggles: [
-        { label: 'Auto-ocultar', on: true },
-        { label: 'Mostrar iRating', on: true },
-        { label: 'Mostrar licencia', on: false },
-      ],
-      editor: 'Editor de layouts',
-      catalog: 'Catálogo',
-      canvas: '2560 × 1440',
-      zoom: '50 %',
-      layoutName: 'Carrera GT3',
     },
   },
 

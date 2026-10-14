@@ -248,7 +248,7 @@ export const en = {
         'Search any setting, a foldable sidebar, adjustable interface size and per-widget reset.',
         'Multilingual: it follows your Windows language, and you can switch it from the settings.',
       ],
-      mockLabel: 'Illustration of the OpenOverlay control panel',
+      alt: 'The OpenOverlay control panel: the Relative page with its columns and the live preview',
     },
     layouts: {
       title: 'Layouts',
@@ -258,7 +258,7 @@ export const en = {
         'Export and import layouts as files to share them.',
         'A shortcut per layout, plus global shortcuts to open/close, next/previous and edit.',
       ],
-      mockLabel: 'Illustration of the OpenOverlay layout editor',
+      alt: 'The OpenOverlay layout editor: the widgets on a canvas at the monitor’s resolution, with the selected widget’s properties',
     },
     comfort: {
       title: 'Comfort',
@@ -277,30 +277,6 @@ export const en = {
         'Settings saved safely against unexpected shutdowns, with a backup.',
         'Local logs, “Copy diagnostics” and “Export report” to report bugs.',
       ],
-    },
-    // Mockup labels (illustrative).
-    mock: {
-      appName: 'OpenOverlay',
-      search: 'Search settings',
-      nav: ['Home', 'Relative', 'Standings', 'Cockpit', 'Fuel calculator', 'Flags', 'Weather', 'Layouts'],
-      activeIndex: 1,
-      status: 'Live',
-      preview: 'Preview',
-      settings: [
-        { label: 'Size', value: '110%' },
-        { label: 'Background opacity', value: '80%' },
-        { label: 'Rows ahead / behind', value: '3 / 3' },
-      ],
-      toggles: [
-        { label: 'Auto-hide', on: true },
-        { label: 'Show iRating', on: true },
-        { label: 'Show licence', on: false },
-      ],
-      editor: 'Layout editor',
-      catalog: 'Catalogue',
-      canvas: '2560 × 1440',
-      zoom: '50%',
-      layoutName: 'GT3 race',
     },
   },
 

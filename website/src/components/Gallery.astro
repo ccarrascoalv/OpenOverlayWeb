@@ -1,23 +1,16 @@
 ---
 // Galería de overlays: capturas reales de cada widget tal y como lo dibuja la app (vista previa del
-// panel de control, tamaño 100 %). Todas las capturas son 16:9, así el escenario nunca cambia de tamaño.
-// Pestañas accesibles (flechas, Inicio y Fin).
+// panel de control), en el idioma de la página. Se capturaron al 200 % y se muestran al 60 % de su
+// tamaño en píxeles (≈ 120 % del widget), así se ven nítidas también en pantallas de alta densidad.
+// El escenario tiene tamaño fijo: cambiar de pestaña no mueve la página.
 import { Image } from 'astro:assets';
-import relative from '../assets/gallery/relative.webp';
-import standings from '../assets/gallery/standings.webp';
-import trackmap from '../assets/gallery/trackmap.webp';
-import flags from '../assets/gallery/flags.webp';
-import incidents from '../assets/gallery/incidents.webp';
-import cockpit from '../assets/gallery/cockpit.webp';
-import tires from '../assets/gallery/tires.webp';
-import fuel from '../assets/gallery/fuel.webp';
-import delta from '../assets/gallery/delta.webp';
-import pedals from '../assets/gallery/pedals.webp';
-import track from '../assets/gallery/track.webp';
-import weather from '../assets/gallery/weather.webp';
+import type { ImageMetadata } from 'astro';
 import { useT } from '../i18n';
 const t = useT(Astro.currentLocale);
 const g = t.gallery;
+
+const shots = import.meta.glob<{ default: ImageMetadata }>('../assets/gallery/*/*.webp', { eager: true });
+const shot = (id: string) => shots[`../assets/gallery/${t.lang}/${id}.webp`].default;
 
 // Descripción de cada widget: la misma de la sección de widgets.
 const all = t.widgets.groups.flatMap((gr) => gr.items);
@@ -25,18 +18,18 @@ const desc = (name: string) => all.find((i) => i.name === name)?.text ?? '';
 
 // Mismo orden que la barra lateral de la app.
 const items = [
-  { id: 'relative', name: 'Relative', img: relative },
-  { id: 'standings', name: 'Standings', img: standings },
-  { id: 'trackmap', name: 'Track map', img: trackmap },
-  { id: 'flags', name: 'Flags', img: flags },
-  { id: 'incidents', name: 'Incidents', img: incidents },
-  { id: 'cockpit', name: 'Cockpit', img: cockpit },
-  { id: 'tires', name: 'Tires', img: tires },
-  { id: 'fuel', name: 'Fuel calculator', img: fuel },
-  { id: 'delta', name: 'Delta', img: delta },
-  { id: 'pedals', name: 'Pedal trace', img: pedals },
-  { id: 'track', name: 'Track & session', img: track },
-  { id: 'weather', name: 'Weather', img: weather },
+  { id: 'relative', name: 'Relative' },
+  { id: 'standings', name: 'Standings' },
+  { id: 'trackmap', name: 'Track map' },
+  { id: 'flags', name: 'Flags' },
+  { id: 'incidents', name: 'Incidents' },
+  { id: 'cockpit', name: 'Cockpit' },
+  { id: 'tires', name: 'Tires' },
+  { id: 'fuel', name: 'Fuel calculator' },
+  { id: 'delta', name: 'Delta' },
+  { id: 'pedals', name: 'Pedal trace' },
+  { id: 'track', name: 'Track & session' },
+  { id: 'weather', name: 'Weather' },
 ];
 ---
 
@@ -67,15 +60,19 @@ const items = [
 
       <div class="gal-panels">
         {
-          items.map((it, i) => (
+          items.map((it, i) => {
+            const img = shot(it.id);
+            return (
             <div class="gal-panel" role="tabpanel" id={`gal-panel-${it.id}`} aria-labelledby={`gal-tab-${it.id}`} hidden={i !== 0} tabindex="0">
               <div class="gal-stage">
                 {/* Las pestañas ocultas no descargan su captura hasta que se eligen (loading="lazy" + hidden). */}
                 <Image
-                  src={it.img}
+                  src={img}
                   alt={g.alt.replace('{name}', it.name)}
-                  widths={[640, 1000, it.img.width]}
-                  sizes="(min-width: 1280px) 1000px, (min-width: 860px) calc(100vw - 20rem), calc(100vw - 2rem)"
+                  widths={[Math.round(img.width / 2), img.width]}
+                  sizes={`min(100vw - 2rem, ${Math.round(img.width * 0.6)}px)`}
+                  style={`--w: ${Math.round(img.width * 0.6)}px`}
+                  quality={90}
                   loading="lazy"
                   decoding="async"
                 />
@@ -85,7 +82,8 @@ const items = [
                 <p>{desc(it.name)}</p>
               </div>
             </div>
-          ))
+            );
+          })
         }
       </div>
     </div>
@@ -162,6 +160,7 @@ const items = [
 
   /* Tamaño fijo (16:9) para todos los widgets: cambiar de pestaña no mueve nada. */
   .gal-stage {
+    position: relative;
     aspect-ratio: 16 / 9;
     background: var(--c-surface);
     border: 1px solid var(--c-border);
@@ -169,11 +168,22 @@ const items = [
     overflow: hidden;
   }
 
+  /* Cada captura a su tamaño (o más pequeña si no cabe), centrada, con los bordes difuminados
+     para que el fondo del simulador se funda con el escenario. */
   .gal-stage :global(img) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: auto;
+    height: auto;
+    max-width: min(100% - 2rem, var(--w));
+    max-height: calc(100% - 2rem);
+    -webkit-mask-image: linear-gradient(90deg, transparent, var(--c-bg) 2.5rem, var(--c-bg) calc(100% - 2.5rem), transparent),
+      linear-gradient(180deg, transparent, var(--c-bg) 2rem, var(--c-bg) calc(100% - 2rem), transparent);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent, var(--c-bg) 2.5rem, var(--c-bg) calc(100% - 2.5rem), transparent),
+      linear-gradient(180deg, transparent, var(--c-bg) 2rem, var(--c-bg) calc(100% - 2rem), transparent);
+    mask-composite: intersect;
   }
 
   .gal-caption {

@@ -1,10 +1,14 @@
 ---
 import ShotFrame from './ShotFrame.astro';
-import ControlPanel from './mockups/ControlPanel.astro';
-import LayoutEditor from './mockups/LayoutEditor.astro';
+import panelEn from '../assets/shots/panel-en.webp';
+import panelEs from '../assets/shots/panel-es.webp';
+import editorEn from '../assets/shots/editor-en.webp';
+import editorEs from '../assets/shots/editor-es.webp';
 import { useT } from '../i18n';
 const t = useT(Astro.currentLocale);
 const p = t.panel;
+// Capturas reales de la app en el idioma de la página.
+const shots = t.lang === 'es' ? { panel: panelEs, editor: editorEs } : { panel: panelEn, editor: editorEn };
 ---
 
 <section class="section" id="panel" aria-labelledby="panel-title">
@@ -21,21 +25,17 @@ const p = t.panel;
           {p.control.items.map((i) => <li>{i}</li>)}
         </ul>
       </div>
-      <ShotFrame label={p.control.mockLabel}>
-        <ControlPanel />
-      </ShotFrame>
+      <ShotFrame image={shots.panel} alt={p.control.alt} />
     </div>
 
-    <div class="feature-row is-flipped" data-reveal>
+    <div class="feature-row" data-reveal>
       <div class="feature-text">
         <h3>{p.layouts.title}</h3>
         <ul class="ticks">
           {p.layouts.items.map((i) => <li>{i}</li>)}
         </ul>
       </div>
-      <ShotFrame label={p.layouts.mockLabel}>
-        <LayoutEditor />
-      </ShotFrame>
+      <ShotFrame image={shots.editor} alt={p.layouts.alt} />
     </div>
 
     <div class="details">
@@ -58,26 +58,23 @@ const p = t.panel;
 <style>
   .feature-row {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    gap: clamp(1.5rem, 1rem + 3vw, 4rem);
-    align-items: center;
+    gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   }
 
   .feature-row + .feature-row {
     margin-top: var(--space-8);
   }
 
-  .feature-row.is-flipped {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  }
-
-  .feature-row.is-flipped .feature-text {
-    order: 2;
-  }
-
   .feature-text {
     display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-5);
+    align-items: start;
+  }
+
+  .feature-text .ticks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-6);
   }
 
   .feature-text h3 {
@@ -126,13 +123,9 @@ const p = t.panel;
   }
 
   @media (max-width: 900px) {
-    .feature-row,
-    .feature-row.is-flipped {
+    .feature-text,
+    .feature-text .ticks {
       grid-template-columns: minmax(0, 1fr);
-    }
-
-    .feature-row.is-flipped .feature-text {
-      order: 0;
     }
 
     .details {

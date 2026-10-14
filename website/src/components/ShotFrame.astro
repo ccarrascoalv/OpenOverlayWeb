@@ -1,39 +1,33 @@
 ---
 /**
- * Marco para una "captura" de la app con proporción fija (16:10).
- * Hoy contiene un mockup HTML (slot). Para usar una captura real, pasa `image` y `alt`:
- *
- *   <ShotFrame label="Panel de control" image={controlPanelPng} alt="Panel de control de OpenOverlay" />
+ * Marco para una captura real de la app. Respeta la proporción de la captura.
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
-  label: string;
-  image?: ImageMetadata;
-  alt?: string;
+  image: ImageMetadata;
+  alt: string;
 }
-const { label, image, alt = '' } = Astro.props;
+const { image, alt } = Astro.props;
 ---
 
 <figure class="shot">
-  {
-    image ? (
-      <Image src={image} alt={alt} widths={[640, 1280]} sizes="(min-width: 1000px) 640px, 92vw" class="shot-img" />
-    ) : (
-      <div class="shot-mock" role="img" aria-label={label}>
-        <div class="shot-inner" aria-hidden="true">
-          <slot />
-        </div>
-      </div>
-    )
-  }
+  <Image
+    src={image}
+    alt={alt}
+    widths={[800, 1280, 1920, image.width]}
+    sizes="(min-width: 1360px) 1280px, calc(100vw - 2rem)"
+    quality={90}
+    loading="lazy"
+    decoding="async"
+    class="shot-img"
+  />
 </figure>
 
 <style>
   .shot {
     margin: 0;
-    aspect-ratio: 16 / 10;
     border: 1px solid var(--c-border);
     border-radius: var(--radius-3);
     background: var(--c-bg);
@@ -41,20 +35,9 @@ const { label, image, alt = '' } = Astro.props;
     box-shadow: 0 30px 60px -30px var(--c-shadow);
   }
 
-  .shot-mock {
-    container-type: inline-size;
-  }
-
-  .shot-mock,
-  .shot-inner {
+  .shot :global(.shot-img) {
+    display: block;
     width: 100%;
-    height: 100%;
-  }
-
-  .shot-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top left;
+    height: auto;
   }
 </style>
