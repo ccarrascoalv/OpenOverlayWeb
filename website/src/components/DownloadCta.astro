@@ -52,6 +52,25 @@ const text = published ? label : t.download.ctaSoon;
     white-space: nowrap;
   }
 
+  /* Centrado óptico. El icono solo dibuja en x 5–19 de su caja de 24: ese hueco se sumaba al
+     relleno izquierdo y al espacio con el texto, y el bloque quedaba desplazado a la derecha. */
+  .dl .btn :global(svg) {
+    margin-inline: -0.2em;
+  }
+
+  /* El texto se centra por la altura de las mayúsculas, no por la caja de la fuente (que en
+     Barlow deja las letras ~1 px por debajo del centro). */
+  .dl [data-dl-label] {
+    text-box: trim-both cap alphabetic;
+  }
+
+  @supports not (text-box: trim-both cap alphabetic) {
+    .dl [data-dl-label] {
+      position: relative;
+      top: -0.05em;
+    }
+  }
+
   .dl--lg .btn {
     min-height: 54px;
     padding-inline: 1.6rem;
