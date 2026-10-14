@@ -6,9 +6,9 @@ export const es: Content = {
   lang: 'es',
   ogLocale: 'es_ES',
   meta: {
-    title: 'OpenOverlay — Overlay de telemetría para iRacing, gratis y open source',
+    title: 'OpenOverlay: overlay de telemetría gratis para iRacing',
     description:
-      'Widgets flotantes sobre iRacing: relative, clasificación, combustible, banderas, clima y más. Gratis, de código abierto (MIT), 100 % local y sin cuenta. Para Windows 10/11.',
+      '12 widgets flotantes sobre iRacing: relative, clasificación, combustible, banderas, clima y más. Gratis, código abierto (MIT), 100 % local, sin cuenta.',
     ogAlt: 'OpenOverlay: overlay de telemetría para iRacing, gratis y de código abierto',
   },
 
