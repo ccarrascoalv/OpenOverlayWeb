@@ -149,8 +149,9 @@ export const es: Content = {
 
   gallery: {
     title: 'Galería de overlays',
-    intro: 'Cada widget tal y como se ve sobre el simulador, en movimiento con datos de ejemplo. Elige uno para verlo de cerca.',
+    intro: 'Cada widget exactamente como lo dibuja OpenOverlay. Elige uno para verlo de cerca.',
     tabsLabel: 'Widgets',
+    alt: 'El widget {name}, capturado de OpenOverlay',
   },
 
   features: {
@@ -192,14 +193,14 @@ export const es: Content = {
 
   widgets: {
     title: '12 widgets. Activa solo los que uses.',
-    intro: 'Cada widget se mueve, se escala del 65 % al 200 % y tiene su propia opacidad, que solo atenúa el fondo: los datos siguen legibles.',
+    intro: 'Muévelos, cambia su tamaño y ajusta cada detalle a tu gusto: el overlay es totalmente configurable.',
     groups: [
       {
         name: 'Tiempos y posiciones',
         items: [
-          { name: 'Relative', text: 'Los coches a tu alrededor en pista, el más cercano primero, con gaps que siguen el ritmo real de cada coche (también en multiclase y tras paradas) y posiciones en vivo: un adelantamiento se ve al instante.' },
+          { name: 'Relative', text: 'Los coches a tu alrededor en pista, el más cercano primero, con gaps que siguen el ritmo real de cada coche y posiciones en vivo.' },
           { name: 'Standings', text: 'Pantalla de tiempos clásica: orden y gaps oficiales en meta, etiquetas de pit y penalización en vivo. Agrupada por clase en multiclase, con nº de pilotos y SOF por clase; tu batalla siempre a la vista.' },
-          { name: 'Delta', text: 'Diferencia en vivo con tu mejor vuelta de la sesión, tu récord personal o la vuelta óptima; verde cuando ganas tiempo, rojo cuando pierdes.' },
+          { name: 'Delta', text: 'Diferencia en vivo con tu mejor vuelta de la sesión, tu récord personal o la vuelta óptima.' },
           { name: 'Track map', text: 'La posición de cada coche en la vuelta, coloreada por clase.' },
         ],
       },
@@ -207,7 +208,7 @@ export const es: Content = {
         name: 'Tu coche',
         items: [
           { name: 'Cockpit', text: 'Dashboard modular: marcha, velocidad, RPM, ABS, combustible, pedales, temperaturas de agua/aceite, reparto de frenada, control de tracción, incidentes y delta, en el orden que elijas; luces de cambio y barras de proximidad opcionales.' },
-          { name: 'Fuel calculator', text: 'Combustible restante, consumo por vuelta (último/medio/mín/máx), vueltas restantes, combustible hasta el final y cuánto repostar. Funciona en carreras por tiempo e ignora repostajes y vueltas de salida.' },
+          { name: 'Fuel calculator', text: 'Combustible restante, consumo por vuelta (último/medio/mín/máx), vueltas restantes, combustible hasta el final y cuánto repostar.' },
           { name: 'Tires', text: 'Temperaturas y desgaste de cada rueda.' },
           { name: 'Pedal trace', text: 'Gráfica de acelerador, freno y embrague con el ABS marcado; opcionalmente marcha, velocidad y volante.' },
         ],
@@ -215,10 +216,10 @@ export const es: Content = {
       {
         name: 'Carrera y entorno',
         items: [
-          { name: 'Flags', text: 'Todas las banderas de iRacing (estado de pista, banderas para ti, progreso de carrera y avisos), activables una a una, con simulador para previsualizarlas.' },
+          { name: 'Flags', text: 'Todas las banderas de iRacing, activables una a una, con simulador para previsualizarlas.' },
           { name: 'Incidents', text: 'Tus incidentes, y los de tu equipo en carreras por equipos.' },
-          { name: 'Weather', text: 'Cuatro tarjetas: temperatura de pista y aire, humedad, probabilidad de lluvia y estado de la pista, y brújula de viento relativa a tu coche (10–60 Hz).' },
-          { name: 'Track & session', text: 'Barra de una línea: circuito, sesión, temperaturas, viento, humedad, uso de pista, tiempo restante y vuelta. Campos a elegir y ordenar.' },
+          { name: 'Weather', text: 'Cuatro tarjetas: temperatura de pista y aire, humedad, probabilidad de lluvia y estado de la pista, y brújula de viento relativa a tu coche.' },
+          { name: 'Track & session', text: 'Circuito, sesión, temperaturas, viento, humedad, uso de pista, tiempo restante y vuelta. Campos a elegir y ordenar.' },
         ],
       },
     ],
@@ -229,7 +230,6 @@ export const es: Content = {
         'Posición', 'Puestos ganados/perdidos', 'Dorsal', 'Marca', 'País', 'Piloto', 'Última parada',
         'Neumático', 'iRating ±', 'Licencia', 'Vuelta', 'Mejor vuelta', 'Última vuelta', 'Gap',
       ],
-      irating: 'La ganancia o pérdida de iRating estimada se calcula por clase y queda a menos de ~1 punto de la de iRacing.',
     },
     brands: {
       title: '32 marcas y 198 banderas incluidas',
@@ -246,7 +246,7 @@ export const es: Content = {
         'Página de inicio con tu sesión y lo que hay en pantalla.',
         'Cada widget tiene su página con vista previa en vivo de lo que cambias.',
         'Buscador de cualquier ajuste, barra lateral plegable, tamaño de interfaz ajustable y restablecer valores por widget.',
-        'En inglés y español, según tu Windows. Añadir un idioma es un solo archivo.',
+        'Multidioma: sigue el idioma de tu Windows y puedes cambiarlo desde los ajustes.',
       ],
       mockLabel: 'Ilustración del panel de control de OpenOverlay',
     },
@@ -259,16 +259,6 @@ export const es: Content = {
         'Atajo propio por layout y atajos globales para abrir/cerrar, siguiente/anterior y editar.',
       ],
       mockLabel: 'Ilustración del editor de layouts de OpenOverlay',
-    },
-    shortcuts: {
-      title: 'Atajos globales',
-      note: 'Todos configurables.',
-      list: [
-        { keys: ['Ctrl', 'Shift', 'F9'], label: 'Mostrar / ocultar overlays' },
-        { keys: ['Ctrl', 'Shift', 'F10'], label: 'Desbloquear widgets' },
-        { keys: ['Ctrl', 'Shift', 'F11'], label: 'Panel de control' },
-        { keys: ['Ctrl', 'Shift', 'F8'], label: 'Reiniciar overlays' },
-      ],
     },
     comfort: {
       title: 'Comodidad',
@@ -338,9 +328,7 @@ export const es: Content = {
         { name: 'Flags', on: true },
       ],
       unlock: {
-        text: 'Para colocarlos, pulsa Desbloquear widgets o',
-        keys: ['Ctrl', 'Shift', 'F10'],
-        after: '. Bloqueados, los clics pasan a iRacing: es el modo para correr.',
+        text: 'Para colocarlos, desbloquea los widgets. Bloqueados, los clics pasan a iRacing: es el modo para correr.',
       },
     },
     session: {
@@ -382,7 +370,7 @@ export const es: Content = {
     creditsTitle: 'Créditos',
     credits: 'YamlDotNet (MIT), Velopack (MIT), SharpVectors (BSD-3-Clause), Barlow Semi Condensed (SIL OFL), logos de marcas mayoritariamente de Simple Icons (CC0).',
     photoCredit: 'Foto de portada:',
-    copyright: '© Andreu Marc Servera Lauder y colaboradores (OpenOverlay contributors).',
+    copyright: '© Carlos Carrasco Alvarez, Andreu Marc Servera Lauder y colaboradores (OpenOverlay contributors).',
     legal:
       'OpenOverlay es una herramienta no oficial hecha por aficionados y no está afiliada ni respaldada por iRacing Motorsport Simulations. Los logos de las marcas son de sus respectivos propietarios y solo se usan para identificar la marca de cada coche.',
     privacy: 'Esta web no usa cookies, analítica ni rastreadores.',

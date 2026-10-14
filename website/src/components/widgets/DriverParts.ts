@@ -4,10 +4,7 @@
 const brands = import.meta.glob<string>('../../assets/brands/*.svg', { eager: true, query: '?url', import: 'default' });
 const flags = import.meta.glob<string>('../../assets/flags-sm/*.webp', { eager: true, query: '?url', import: 'default' });
 
-// Como en la app, cada logo se ajusta a su celda: McLaren solo ocupa una esquina de su caja de 24.
-const maskFix: Record<string, string> = { mclaren: '--logo-size:400%;--logo-pos:93% 40%;' };
-
-export const brandStyle = (key: string) => `--logo:url("${brands[`../../assets/brands/${key}.svg`]}");${maskFix[key] ?? ''}`;
+export const brandStyle = (key: string) => `--logo:url("${brands[`../../assets/brands/${key}.svg`]}");`;
 
 export const flagUrl = (key: string) => flags[`../../assets/flags-sm/${key}.webp`];
 

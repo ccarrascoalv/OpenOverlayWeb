@@ -40,33 +40,12 @@ const p = t.panel;
 
     <div class="details">
       <div class="detail" data-reveal>
-        <h3>{p.shortcuts.title}</h3>
-        <ul class="shortcuts">
-          {
-            p.shortcuts.list.map((s) => (
-              <li>
-                <span class="keys">
-                  {s.keys.map((k, i) => (
-                    <>
-                      {i > 0 && <span class="plus">+</span>}
-                      <kbd>{k}</kbd>
-                    </>
-                  ))}
-                </span>
-                <span>{s.label}</span>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="detail-note">{p.shortcuts.note}</p>
-      </div>
-      <div class="detail" data-reveal style="--reveal-i: 1">
         <h3>{p.comfort.title}</h3>
         <ul class="ticks">
           {p.comfort.items.map((i) => <li>{i}</li>)}
         </ul>
       </div>
-      <div class="detail" data-reveal style="--reveal-i: 2">
+      <div class="detail" data-reveal style="--reveal-i: 1">
         <h3>{p.reliability.title}</h3>
         <ul class="ticks">
           {p.reliability.items.map((i) => <li>{i}</li>)}
@@ -129,7 +108,7 @@ const p = t.panel;
 
   .details {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-5);
     margin-top: var(--space-8);
     padding-top: var(--space-7);
@@ -142,26 +121,8 @@ const p = t.panel;
     gap: var(--space-4);
   }
 
-  .detail .ticks li,
-  .shortcuts li {
+  .detail .ticks li {
     font-size: var(--step--1);
-  }
-
-  .shortcuts {
-    display: grid;
-    gap: var(--space-3);
-    list-style: none;
-  }
-
-  .shortcuts li {
-    display: grid;
-    gap: var(--space-1);
-    color: var(--c-text-2);
-  }
-
-  .detail-note {
-    font-size: var(--step--1);
-    color: var(--c-text-3);
   }
 
   @media (max-width: 900px) {

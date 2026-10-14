@@ -256,27 +256,36 @@ test.describe('Galería de overlays', () => {
     await mockApi(page, 200);
     await page.goto('/#gallery');
     const tabs = page.locator('#gallery [role="tab"]');
-    await expect(tabs).toHaveCount(8);
+    await expect(tabs).toHaveCount(12);
     await expect(page.locator('#gal-panel-relative')).toBeVisible();
     await page.locator('#gal-tab-cockpit').click();
     await expect(page.locator('#gal-tab-cockpit')).toHaveAttribute('aria-selected', 'true');
     await expect(page.locator('#gal-panel-cockpit')).toBeVisible();
     await expect(page.locator('#gal-panel-relative')).toBeHidden();
     await page.keyboard.press('ArrowRight');
-    await expect(page.locator('#gal-tab-fuel')).toBeFocused();
-    await expect(page.locator('#gal-panel-fuel')).toBeVisible();
+    await expect(page.locator('#gal-tab-tires')).toBeFocused();
+    await expect(page.locator('#gal-panel-tires')).toBeVisible();
     await page.keyboard.press('End');
     await expect(page.locator('#gal-panel-weather')).toBeVisible();
   });
 
-  test('los widgets caben en su hueco a 375 px', async ({ page }) => {
+  test('el escenario mantiene su tamaño y la captura carga al cambiar de widget', async ({ page }) => {
     await mockApi(page, 200);
-    await page.setViewportSize({ width: 375, height: 800 });
-    await page.goto('/#gallery');
-    for (const id of ['relative', 'standings', 'cockpit', 'pedals']) {
-      await page.locator(`#gal-tab-${id}`).click();
-      const over = await page.locator(`#gal-panel-${id} .ow-fit-inner`).evaluate((el) => el.getBoundingClientRect().right - window.innerWidth);
-      expect(over, id).toBeLessThanOrEqual(1);
+    for (const width of [375, 1280]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto('/#gallery');
+      let size = '';
+      for (const id of ['relative', 'standings', 'delta', 'track', 'weather']) {
+        await page.locator(`#gal-tab-${id}`).click();
+        const img = page.locator(`#gal-panel-${id} img`);
+        await expect(img).toHaveJSProperty('complete', true);
+        expect(await img.evaluate((el: HTMLImageElement) => el.naturalWidth), id).toBeGreaterThan(0);
+        const box = await page.locator(`#gal-panel-${id} .gal-stage`).boundingBox();
+        const s2 = `${Math.round(box!.width)}x${Math.round(box!.height)}`;
+        if (size) expect(s2, id).toBe(size);
+        size = s2;
+        expect(box!.x + box!.width, id).toBeLessThanOrEqual(width);
+      }
     }
   });
 });

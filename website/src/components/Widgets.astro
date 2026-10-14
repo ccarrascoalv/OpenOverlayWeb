@@ -45,7 +45,6 @@ const brands = Object.entries(
         <ul class="colhead" aria-label={w.columns.title}>
           {w.columns.list.map((c) => <li>{c}</li>)}
         </ul>
-        <p class="extra-note">{w.columns.irating}</p>
       </div>
       <div class="extra brands" data-reveal style="--reveal-i: 1">
         <h3>{w.brands.title}</h3>
@@ -123,11 +122,6 @@ const brands = Object.entries(
 
   .extra p {
     color: var(--c-text-2);
-  }
-
-  .extra .extra-note {
-    font-size: var(--step--1);
-    color: var(--c-text-3);
   }
 
   .colhead {

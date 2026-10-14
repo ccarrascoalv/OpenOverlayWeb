@@ -149,8 +149,9 @@ export const en = {
 
   gallery: {
     title: 'Overlay gallery',
-    intro: 'Every widget as it looks over the sim, moving with sample data. Pick one to see it up close.',
+    intro: 'Every widget exactly as OpenOverlay draws it. Pick one to see it up close.',
     tabsLabel: 'Widgets',
+    alt: 'The {name} widget, captured from OpenOverlay',
   },
 
   features: {
@@ -192,14 +193,14 @@ export const en = {
 
   widgets: {
     title: '12 widgets. Switch on only the ones you use.',
-    intro: 'Every widget can be moved, scaled from 65% to 200%, and has its own opacity, which only dims the background: the data stays readable.',
+    intro: 'Move them, resize them and set every detail the way you like: the whole overlay is fully configurable.',
     groups: [
       {
         name: 'Timing and positions',
         items: [
-          { name: 'Relative', text: 'The cars around you on track, closest first, with gaps that follow each car’s real pace (in multiclass and after pit stops too) and live positions: an overtake shows up instantly.' },
+          { name: 'Relative', text: 'The cars around you on track, closest first, with gaps that follow each car’s real pace and live positions.' },
           { name: 'Standings', text: 'A classic timing screen: official order and gaps at the line, live pit and penalty tags. Grouped by class in multiclass, with driver count and SOF per class; your battle always in view.' },
-          { name: 'Delta', text: 'Live gap to your best lap of the session, your personal best or the optimal lap; green when you gain time, red when you lose it.' },
+          { name: 'Delta', text: 'Live gap to your best lap of the session, your personal best or the optimal lap.' },
           { name: 'Track map', text: 'Where every car is around the lap, coloured by class.' },
         ],
       },
@@ -207,7 +208,7 @@ export const en = {
         name: 'Your car',
         items: [
           { name: 'Cockpit', text: 'A modular dashboard: gear, speed, RPM, ABS, fuel, pedals, water/oil temperatures, brake bias, traction control, incidents and delta, in the order you choose; optional shift lights and proximity bars.' },
-          { name: 'Fuel calculator', text: 'Fuel left, usage per lap (last/average/min/max), laps left, fuel to finish and how much to add. Works in timed races and ignores refuelling and out laps.' },
+          { name: 'Fuel calculator', text: 'Fuel left, usage per lap (last/average/min/max), laps left, fuel to finish and how much to add.' },
           { name: 'Tires', text: 'Temperatures and wear for every tyre.' },
           { name: 'Pedal trace', text: 'A graph of throttle, brake and clutch with ABS marked; optionally gear, speed and steering.' },
         ],
@@ -215,10 +216,10 @@ export const en = {
       {
         name: 'Race and conditions',
         items: [
-          { name: 'Flags', text: 'Every iRacing flag (track state, flags for you, race progress and warnings), each one switchable, with a simulator to preview them.' },
+          { name: 'Flags', text: 'Every iRacing flag, each one switchable, with a simulator to preview them.' },
           { name: 'Incidents', text: 'Your incidents, and your team’s in team races.' },
-          { name: 'Weather', text: 'Four cards: track and air temperature, humidity, chance of rain and track state, plus a wind compass relative to your car (10–60 Hz).' },
-          { name: 'Track & session', text: 'A one-line bar: track, session, temperatures, wind, humidity, track usage, time remaining and lap. Pick and order the fields.' },
+          { name: 'Weather', text: 'Four cards: track and air temperature, humidity, chance of rain and track state, plus a wind compass relative to your car.' },
+          { name: 'Track & session', text: 'Track, session, temperatures, wind, humidity, track usage, time remaining and lap. Pick and order the fields.' },
         ],
       },
     ],
@@ -229,7 +230,6 @@ export const en = {
         'Position', 'Places gained/lost', 'Car number', 'Make', 'Country', 'Driver', 'Last pit stop',
         'Tyre', 'iRating ±', 'Licence', 'Lap', 'Best lap', 'Last lap', 'Gap',
       ],
-      irating: 'The estimated iRating gain or loss is calculated per class and lands within ~1 point of iRacing’s.',
     },
     brands: {
       title: '32 makes and 198 flags included',
@@ -246,7 +246,7 @@ export const en = {
         'A home page with your session and what’s on screen.',
         'Every widget has its own page with a live preview of what you change.',
         'Search any setting, a foldable sidebar, adjustable interface size and per-widget reset.',
-        'In English and Spanish, following your Windows language. Adding a language is a single file.',
+        'Multilingual: it follows your Windows language, and you can switch it from the settings.',
       ],
       mockLabel: 'Illustration of the OpenOverlay control panel',
     },
@@ -259,16 +259,6 @@ export const en = {
         'A shortcut per layout, plus global shortcuts to open/close, next/previous and edit.',
       ],
       mockLabel: 'Illustration of the OpenOverlay layout editor',
-    },
-    shortcuts: {
-      title: 'Global shortcuts',
-      note: 'All of them configurable.',
-      list: [
-        { keys: ['Ctrl', 'Shift', 'F9'], label: 'Show / hide overlays' },
-        { keys: ['Ctrl', 'Shift', 'F10'], label: 'Unlock widgets' },
-        { keys: ['Ctrl', 'Shift', 'F11'], label: 'Control panel' },
-        { keys: ['Ctrl', 'Shift', 'F8'], label: 'Restart overlays' },
-      ],
     },
     comfort: {
       title: 'Comfort',
@@ -338,9 +328,7 @@ export const en = {
         { name: 'Flags', on: true },
       ],
       unlock: {
-        text: 'To place them, press Unlock widgets or',
-        keys: ['Ctrl', 'Shift', 'F10'],
-        after: '. Once locked, clicks go through to iRacing: that’s the mode for racing.',
+        text: 'To place them, unlock the widgets. Once locked, clicks go through to iRacing: that’s the mode for racing.',
       },
     },
     session: {
@@ -382,7 +370,7 @@ export const en = {
     creditsTitle: 'Credits',
     credits: 'YamlDotNet (MIT), Velopack (MIT), SharpVectors (BSD-3-Clause), Barlow Semi Condensed (SIL OFL), car brand logos mostly from Simple Icons (CC0).',
     photoCredit: 'Hero photo:',
-    copyright: '© Andreu Marc Servera Lauder and contributors (OpenOverlay contributors).',
+    copyright: '© Carlos Carrasco Alvarez, Andreu Marc Servera Lauder and contributors (OpenOverlay contributors).',
     legal:
       'OpenOverlay is an unofficial, fan-made tool and is not affiliated with or endorsed by iRacing Motorsport Simulations. Car brand logos belong to their respective owners and are used only to identify each car’s make.',
     privacy: 'This site uses no cookies, analytics or trackers.',

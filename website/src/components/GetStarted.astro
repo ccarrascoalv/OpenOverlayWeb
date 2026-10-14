@@ -60,18 +60,7 @@ const { install: s1, borderless: s2, widgets: s3, session: s4 } = s;
             }
           </ul>
           <p class="unlock">
-            {s3.unlock.text}{' '}
-            <span class="keys">
-              {
-                s3.unlock.keys.map((k, i) => (
-                  <>
-                    {i > 0 && <span class="plus">+</span>}
-                    <kbd>{k}</kbd>
-                  </>
-                ))
-              }
-            </span>
-            {s3.unlock.after}
+            {s3.unlock.text}
           </p>
         </div>
       </li>

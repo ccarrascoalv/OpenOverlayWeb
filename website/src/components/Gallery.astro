@@ -1,17 +1,20 @@
 ---
-// Galería de overlays: cada widget de la app en movimiento sobre una captura del simulador.
-// Pestañas accesibles (flechas, Inicio y Fin); el widget se escala para caber en el escenario.
+// Galería de overlays: capturas reales de cada widget tal y como lo dibuja la app (vista previa del
+// panel de control, tamaño 100 %). Todas las capturas son 16:9, así el escenario nunca cambia de tamaño.
+// Pestañas accesibles (flechas, Inicio y Fin).
 import { Image } from 'astro:assets';
-import backdrop from '../assets/heroes/porsche-gtp.jpg';
-import Fit from './widgets/Fit.astro';
-import RelativeW from './widgets/RelativeW.astro';
-import StandingsW from './widgets/StandingsW.astro';
-import CockpitW from './widgets/CockpitW.astro';
-import FuelW from './widgets/FuelW.astro';
-import FlagsW from './widgets/FlagsW.astro';
-import TiresW from './widgets/TiresW.astro';
-import PedalsW from './widgets/PedalsW.astro';
-import WeatherW from './widgets/WeatherW.astro';
+import relative from '../assets/gallery/relative.webp';
+import standings from '../assets/gallery/standings.webp';
+import trackmap from '../assets/gallery/trackmap.webp';
+import flags from '../assets/gallery/flags.webp';
+import incidents from '../assets/gallery/incidents.webp';
+import cockpit from '../assets/gallery/cockpit.webp';
+import tires from '../assets/gallery/tires.webp';
+import fuel from '../assets/gallery/fuel.webp';
+import delta from '../assets/gallery/delta.webp';
+import pedals from '../assets/gallery/pedals.webp';
+import track from '../assets/gallery/track.webp';
+import weather from '../assets/gallery/weather.webp';
 import { useT } from '../i18n';
 const t = useT(Astro.currentLocale);
 const g = t.gallery;
@@ -20,15 +23,20 @@ const g = t.gallery;
 const all = t.widgets.groups.flatMap((gr) => gr.items);
 const desc = (name: string) => all.find((i) => i.name === name)?.text ?? '';
 
+// Mismo orden que la barra lateral de la app.
 const items = [
-  { id: 'relative', name: 'Relative', w: 640, C: RelativeW },
-  { id: 'standings', name: 'Standings', w: 800, C: StandingsW },
-  { id: 'cockpit', name: 'Cockpit', w: 820, C: CockpitW },
-  { id: 'fuel', name: 'Fuel calculator', w: 300, C: FuelW },
-  { id: 'flags', name: 'Flags', w: 320, C: FlagsW },
-  { id: 'tires', name: 'Tires', w: 340, C: TiresW },
-  { id: 'pedals', name: 'Pedal trace', w: 820, C: PedalsW },
-  { id: 'weather', name: 'Weather', w: 230, C: WeatherW },
+  { id: 'relative', name: 'Relative', img: relative },
+  { id: 'standings', name: 'Standings', img: standings },
+  { id: 'trackmap', name: 'Track map', img: trackmap },
+  { id: 'flags', name: 'Flags', img: flags },
+  { id: 'incidents', name: 'Incidents', img: incidents },
+  { id: 'cockpit', name: 'Cockpit', img: cockpit },
+  { id: 'tires', name: 'Tires', img: tires },
+  { id: 'fuel', name: 'Fuel calculator', img: fuel },
+  { id: 'delta', name: 'Delta', img: delta },
+  { id: 'pedals', name: 'Pedal trace', img: pedals },
+  { id: 'track', name: 'Track & session', img: track },
+  { id: 'weather', name: 'Weather', img: weather },
 ];
 ---
 
@@ -57,34 +65,27 @@ const items = [
         }
       </div>
 
-      <div class="gal-stage">
-        <Image src={backdrop} alt="" class="gal-bg" widths={[800, 1280, 1920]} sizes="(min-width: 1000px) 900px, 100vw" loading="lazy" />
-        <div class="gal-shade"></div>
+      <div class="gal-panels">
         {
-          items.map((it, i) => {
-            const content = (
-              <>
-                <div class="gal-widget" role="img" aria-label={`${it.name}: ${t.hero.sceneLabel}`}>
-                  <div aria-hidden="true" style={`width:min(100%, ${it.w}px)`}>
-                    <Fit w={it.w}>
-                      <it.C />
-                    </Fit>
-                  </div>
-                </div>
-                <div class="gal-caption">
-                  <h3>{it.name}</h3>
-                  <p>{desc(it.name)}</p>
-                </div>
-              </>
-            );
-            // Solo el primer widget se pinta al cargar; el resto espera en un <template> hasta que
-            // se elige su pestaña, para no hacer pesada la página.
-            return (
-              <div class="gal-panel" role="tabpanel" id={`gal-panel-${it.id}`} aria-labelledby={`gal-tab-${it.id}`} hidden={i !== 0} tabindex="0">
-                {i === 0 ? content : <template data-gal-template>{content}</template>}
+          items.map((it, i) => (
+            <div class="gal-panel" role="tabpanel" id={`gal-panel-${it.id}`} aria-labelledby={`gal-tab-${it.id}`} hidden={i !== 0} tabindex="0">
+              <div class="gal-stage">
+                {/* Las pestañas ocultas no descargan su captura hasta que se eligen (loading="lazy" + hidden). */}
+                <Image
+                  src={it.img}
+                  alt={g.alt.replace('{name}', it.name)}
+                  widths={[640, 1000, it.img.width]}
+                  sizes="(min-width: 1280px) 1000px, (min-width: 860px) calc(100vw - 20rem), calc(100vw - 2rem)"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-            );
-          })
+              <div class="gal-caption">
+                <h3>{it.name}</h3>
+                <p>{desc(it.name)}</p>
+              </div>
+            </div>
+          ))
         }
       </div>
     </div>
@@ -101,13 +102,13 @@ const items = [
   .gal-tabs {
     display: grid;
     align-content: start;
-    gap: var(--space-1);
+    gap: 2px;
   }
 
   .gal-tabs button {
     position: relative;
     isolation: isolate;
-    padding: 0.65rem 1rem;
+    padding: 0.5rem 1rem;
     border: 0;
     border-radius: var(--radius-2);
     background: transparent;
@@ -116,6 +117,7 @@ const items = [
     font-size: var(--step-1);
     font-weight: 600;
     text-align: left;
+    white-space: nowrap;
     cursor: pointer;
     transition: color var(--dur-1) var(--ease-out);
   }
@@ -148,38 +150,9 @@ const items = [
     background: var(--c-surface-alt);
   }
 
-  .gal-stage {
-    position: relative;
-    isolation: isolate;
-    min-height: 34rem;
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-3);
-    overflow: hidden;
-  }
-
-  .gal-stage :global(.gal-bg) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 35% 50%;
-    filter: saturate(1.05) brightness(0.7);
-    z-index: -2;
-  }
-
-  .gal-shade {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--c-bg) 20%, transparent) 0%, color-mix(in srgb, var(--c-bg) 35%, transparent) 55%, var(--c-bg) 100%);
-  }
-
   .gal-panel {
     display: grid;
-    grid-template-rows: 1fr auto;
-    min-height: 34rem;
-    padding: clamp(1rem, 0.5rem + 2vw, 2rem);
+    gap: var(--space-5);
     animation: gal-in var(--dur-3) var(--ease-out);
   }
 
@@ -187,20 +160,29 @@ const items = [
     display: none;
   }
 
-  .gal-widget {
-    display: grid;
-    place-items: center;
+  /* Tamaño fijo (16:9) para todos los widgets: cambiar de pestaña no mueve nada. */
+  .gal-stage {
+    aspect-ratio: 16 / 9;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-3);
+    overflow: hidden;
   }
 
-  .gal-widget > div {
-    min-width: 0;
+  .gal-stage :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .gal-caption {
     display: grid;
+    align-content: start;
     gap: var(--space-2);
     max-width: 44rem;
-    margin-top: var(--space-5);
+    /* Reserva tres líneas de texto para que la página no salte al cambiar de widget. */
+    min-height: calc(var(--step-3) * 1.2 + var(--space-2) + 4.8em);
   }
 
   .gal-caption h3 {
@@ -214,7 +196,6 @@ const items = [
   @keyframes gal-in {
     from {
       opacity: 0;
-      transform: translateY(8px);
     }
   }
 
@@ -229,11 +210,6 @@ const items = [
       overflow-x: auto;
       scrollbar-width: none;
       padding-bottom: 2px;
-    }
-
-    .gal-stage,
-    .gal-panel {
-      min-height: 26rem;
     }
   }
 </style>
