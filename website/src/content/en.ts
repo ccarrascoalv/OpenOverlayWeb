@@ -328,7 +328,7 @@ export const en = {
       { q: 'How do I update?', a: 'You don’t need to: OpenOverlay checks for updates when it starts and updates itself in the background.' },
       { q: 'Tyre data doesn’t change during the race.', a: 'In most cars, iRacing only updates that data when you’re in the pits.' },
       { q: 'Does it work with other sims?', a: 'No, only with iRacing.' },
-      { q: 'Does it affect FPS?', a: 'It’s optimised to use little CPU and GPU. High-frequency widgets can be turned down from ~60 Hz to save even more.' },
+      { q: 'Does it affect FPS?', a: 'It’s optimised to keep your FPS up. High-frequency widgets refresh at up to ~60 Hz, and you can turn them down to use less CPU.' },
       { q: 'I found a bug.', a: 'Open an issue on GitHub and attach the file from “Export report” (in the control panel).', link: { label: 'Open an issue', key: 'issues' } },
     ],
   },

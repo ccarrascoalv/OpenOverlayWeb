@@ -328,7 +328,7 @@ export const es: Content = {
       { q: '¿Cómo actualizo?', a: 'No hace falta: OpenOverlay busca actualizaciones al arrancar y se actualiza solo en segundo plano.' },
       { q: 'Los neumáticos no cambian en carrera.', a: 'En la mayoría de coches, iRacing solo actualiza esos datos cuando pasas por el box.' },
       { q: '¿Funciona con otros simuladores?', a: 'No, solo con iRacing.' },
-      { q: '¿Afecta a los FPS?', a: 'Está optimizado para usar poca CPU y GPU. Los widgets de alta frecuencia pueden bajarse de ~60 Hz para ahorrar todavía más.' },
+      { q: '¿Afecta a los FPS?', a: 'Está optimizado para que el juego vaya bien de FPS. Los widgets de alta frecuencia se refrescan hasta ~60 Hz, y puedes bajarlos para usar menos CPU.' },
       { q: 'He encontrado un bug.', a: 'Abre un issue en GitHub y adjunta el archivo de «Exportar informe» (en el panel de control).', link: { label: 'Abrir un issue', key: 'issues' } },
     ],
   },
