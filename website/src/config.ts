@@ -21,4 +21,5 @@ export const URLS = {
   contributing: `${REPO_URL}/blob/HEAD/CONTRIBUTING.md`,
   license: `${REPO_URL}/blob/HEAD/LICENSE`,
   api: `https://api.github.com/repos/${REPO}/releases/latest`,
+  donate: 'https://paypal.me/ccarrascoalv',
 } as const;

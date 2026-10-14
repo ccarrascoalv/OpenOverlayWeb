@@ -12,6 +12,8 @@ async function mockApi(page: Page, status: number, body: object = { tag_name: 'v
 
 /** URLs externas permitidas: las de LANDING-PAGE.md (§3 y §10). */
 const ALLOWED_EXTERNAL = new Set([
+  // Botón de donaciones (PayPal)
+  'https://paypal.me/ccarrascoalv',
   'https://github.com/andreuservera/OpenOverlay',
   'https://github.com/andreuservera/OpenOverlay/releases/latest/download/OpenOverlay-win-Setup.exe',
   'https://github.com/andreuservera/OpenOverlay/releases/latest',

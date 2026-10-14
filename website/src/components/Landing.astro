@@ -11,6 +11,7 @@ import GetStarted from './GetStarted.astro';
 import Faq from './Faq.astro';
 import Footer from './Footer.astro';
 import Gallery from './Gallery.astro';
+import SupportButton from './SupportButton.astro';
 ---
 
 <Base>
@@ -26,6 +27,7 @@ import Gallery from './Gallery.astro';
     <Gallery />
   </main>
   <Footer />
+  <SupportButton />
   <script is:inline>
     // Encaja los widgets en su hueco antes del primer pintado (sin saltos de maquetación).
     document.querySelectorAll('[data-fit]').forEach(function (box) {

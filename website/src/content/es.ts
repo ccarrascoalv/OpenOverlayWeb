@@ -333,6 +333,11 @@ export const es: Content = {
     ],
   },
 
+  support: {
+    label: 'Apoyar',
+    title: 'Apoya OpenOverlay con una donación en PayPal (se abre en una pestaña nueva)',
+  },
+
   footer: {
     tagline: 'Overlay de telemetría para iRacing, gratis y de código abierto.',
     linksTitle: 'Proyecto',

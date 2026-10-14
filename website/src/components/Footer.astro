@@ -52,7 +52,8 @@ const defaultCredit = heroCredit(h, t.lang as 'en' | 'es');
 
 <style>
   .site-footer {
-    padding-block: var(--space-8) var(--space-7);
+    /* Abajo deja sitio al botón flotante de apoyo para que no tape el texto final. */
+    padding-block: var(--space-8) calc(var(--space-7) + 3.5rem);
     border-top: 1px solid var(--c-border);
     background: var(--c-side);
     font-size: var(--step--1);

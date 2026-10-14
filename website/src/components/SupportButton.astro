@@ -1,0 +1,75 @@
+---
+// Botón flotante de apoyo (abajo a la derecha): lleva a la página de donaciones de PayPal.
+import Icon from './Icon.astro';
+import { URLS } from '../config';
+import { useT } from '../i18n';
+const t = useT(Astro.currentLocale);
+---
+
+<a class="support" href={URLS.donate} target="_blank" rel="noopener" title={t.support.title}>
+  <Icon name="heart" />
+  <span>{t.support.label}</span>
+</a>
+
+<style>
+  .support {
+    position: fixed;
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: 0.55rem 1rem 0.55rem 0.85rem;
+    border: 1px solid var(--c-border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c-surface-alt) 92%, transparent);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 30px -12px var(--c-shadow);
+    color: var(--c-text);
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition: transform var(--dur-1) var(--ease-out);
+  }
+
+  .support span {
+    text-box: trim-both cap alphabetic;
+  }
+
+  .support :global(svg) {
+    width: 1.2em;
+    height: 1.2em;
+    flex: none;
+    color: var(--c-text-2);
+    transition: color var(--dur-1) var(--ease-out), transform var(--dur-2) var(--ease-out);
+  }
+
+  .support:hover {
+    transform: translateY(-2px);
+  }
+
+  .support:hover :global(svg) {
+    color: var(--c-accent);
+    transform: scale(1.12);
+  }
+
+  .support:active {
+    transform: scale(0.97);
+  }
+
+  .support:focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .support,
+    .support :global(svg) {
+      transition: none;
+    }
+  }
+</style>
