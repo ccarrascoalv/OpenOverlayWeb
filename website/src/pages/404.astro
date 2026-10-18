@@ -1,0 +1,52 @@
+---
+// Página para enlaces rotos (GitHub Pages la sirve sola). No se indexa.
+import Base from '../layouts/Base.astro';
+import { langPath } from '../i18n';
+---
+
+<Base noindex title="404 · OpenOverlay">
+  <main id="main" class="nf">
+    <p class="nf-code">404</p>
+    <h1>Page not found</h1>
+    <p lang="es">Página no encontrada</p>
+    <p class="nf-links">
+      <a class="btn btn--primary" href={langPath('en')}>Back to OpenOverlay</a>
+      <a class="btn" href={langPath('es')} lang="es">Ir a la web en español</a>
+    </p>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-4);
+    min-height: 100vh;
+    padding: var(--space-6) 1rem;
+    text-align: center;
+  }
+
+  .nf-code {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--c-text-3);
+  }
+
+  h1 {
+    font-size: var(--step-4);
+  }
+
+  .nf p {
+    color: var(--c-text-2);
+  }
+
+  .nf-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+</style>

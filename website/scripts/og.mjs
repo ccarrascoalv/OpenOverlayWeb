@@ -1,4 +1,5 @@
-// Genera public/og.png (1200×630) y public/apple-touch-icon.png a partir del logo y la paleta.
+// Genera public/og.png (inglés), public/og-es.png (español), ambas de 1200×630, y public/apple-touch-icon.png
+// a partir del logo y la paleta.
 // Uso: node scripts/og.mjs
 import { chromium } from '@playwright/test';
 import sharp from 'sharp';
@@ -13,7 +14,12 @@ const b64 = async (p) => (await readFile(p)).toString('base64');
 const font = `data:font/woff2;base64,${await b64(here('../node_modules/@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-700-normal.woff2'))}`;
 const font6 = `data:font/woff2;base64,${await b64(here('../node_modules/@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2'))}`;
 
-const html = `<!doctype html><html><head><style>
+const texts = {
+  en: { file: 'og.png', lang: 'en', title: 'Telemetry overlay<br>for iRacing.', sub: 'Free and open source.', facts: 'Windows 10/11 · No account · 100% local' },
+  es: { file: 'og-es.png', lang: 'es', title: 'Overlay de telemetría<br>para iRacing.', sub: 'Gratis y de código abierto.', facts: 'Windows 10/11 · Sin cuenta · 100 % local' },
+};
+
+const html = (t) => `<!doctype html><html lang="${t.lang}"><head><style>
 ${tokens}
 @font-face { font-family: 'Barlow Semi Condensed'; font-weight: 700; src: url(${font}); }
 @font-face { font-family: 'Barlow Semi Condensed'; font-weight: 600; src: url(${font6}); }
@@ -31,19 +37,21 @@ p { margin: 0; display: flex; gap: 16px; align-items: center; font-size: 30px; f
 <div class="bg"></div><div class="shade"></div>
 <div class="c">
   <img src="data:image/png;base64,${logo}" alt="">
-  <h1>Telemetry overlay<br>for iRacing.<span>Free and open source.</span></h1>
-  <p><span class="pill">OpenOverlay</span> Windows 10/11 · No account · 100% local</p>
+  <h1>${t.title}<span>${t.sub}</span></h1>
+  <p><span class="pill">OpenOverlay</span> ${t.facts}</p>
 </div>
 <div class="bar"></div>
 </body></html>`;
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
-await page.setContent(html, { waitUntil: 'load' });
-await page.evaluate(() => document.fonts.ready);
-const shot = await page.screenshot();
-await sharp(shot).png({ palette: true, quality: 90, compressionLevel: 9 }).toFile(here('../public/og.png'));
+for (const t of Object.values(texts)) {
+  await page.setContent(html(t), { waitUntil: 'load' });
+  await page.evaluate(() => document.fonts.ready);
+  const shot = await page.screenshot();
+  await sharp(shot).png({ palette: true, quality: 90, compressionLevel: 9 }).toFile(here(`../public/${t.file}`));
+}
 await browser.close();
 
 await sharp(here('../src/assets/logo-512.png')).resize(180, 180).png({ palette: true, compressionLevel: 9 }).toFile(here('../public/apple-touch-icon.png'));
-console.log('OK: public/og.png y public/apple-touch-icon.png');
+console.log('OK: public/og.png, public/og-es.png y public/apple-touch-icon.png');

@@ -1,0 +1,61 @@
+---
+// Datos estructurados (schema.org) para buscadores: la web, la app como software gratuito para
+// Windows y las preguntas frecuentes. Todo sale de los textos de la página y de config.ts.
+import { getImage } from 'astro:assets';
+import panelEn from '../assets/shots/panel-en.webp';
+import panelEs from '../assets/shots/panel-es.webp';
+import { URLS } from '../config';
+import { langPath, useT, type Lang } from '../i18n';
+const t = useT(Astro.currentLocale);
+
+const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
+const pageUrl = abs(langPath(t.lang as Lang));
+const homeUrl = abs(langPath('en'));
+const shot = await getImage({ src: t.lang === 'es' ? panelEs : panelEn, width: 1280, format: 'webp', quality: 85 });
+
+const data = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${homeUrl}#website`,
+      url: homeUrl,
+      name: 'OpenOverlay',
+      inLanguage: t.lang,
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${homeUrl}#app`,
+      name: 'OpenOverlay',
+      description: t.meta.description,
+      url: pageUrl,
+      applicationCategory: 'UtilitiesApplication',
+      applicationSubCategory: 'iRacing telemetry overlay',
+      operatingSystem: 'Windows 10, Windows 11',
+      downloadUrl: URLS.download,
+      installUrl: URLS.download,
+      screenshot: abs(shot.src),
+      license: 'https://opensource.org/licenses/MIT',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+      author: [
+        { '@type': 'Person', name: 'Carlos Carrasco Alvarez' },
+        { '@type': 'Person', name: 'Andreu Marc Servera Lauder' },
+      ],
+      sameAs: [URLS.repo],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${pageUrl}#faq`,
+      inLanguage: t.lang,
+      mainEntity: t.faq.items.map((i) => ({
+        '@type': 'Question',
+        name: i.q,
+        acceptedAnswer: { '@type': 'Answer', text: i.a },
+      })),
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(data).replaceAll('<', '\\' + 'u003c')} />
