@@ -11,6 +11,7 @@ import barlow700 from '@fontsource/barlow-semi-condensed/files/barlow-semi-conde
 import barlow600 from '@fontsource/barlow-semi-condensed/files/barlow-semi-condensed-latin-600-normal.woff2?url';
 import JsonLd from '../components/JsonLd.astro';
 import tokens from '../styles/tokens.css?raw';
+import { GOOGLE_SITE_VERIFICATION } from '../config';
 import { defaultLang, langPath, languages, useT, type Lang } from '../i18n';
 const t = useT(Astro.currentLocale);
 
@@ -43,6 +44,7 @@ const otherLocales = (Object.keys(languages) as Lang[]).filter((l) => l !== t.la
     <meta name="description" content={t.meta.description} />
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content={themeColor} />
+    <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
     {canonical && <link rel="canonical" href={canonical} />}
     {/* hreflang necesita URLs absolutas: solo se emite cuando hay SITE_URL (en el despliegue). */}
     {canonical && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}

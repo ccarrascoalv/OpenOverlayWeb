@@ -12,6 +12,9 @@ const REPO_URL = `https://github.com/${REPO}`;
  */
 export const RELEASE_STATUS: 'published' | 'none' = 'published';
 
+/** Verificación de la propiedad en Google Search Console (etiqueta meta). */
+export const GOOGLE_SITE_VERIFICATION = 'g1ZDvIHt2W8txf9XbEjKatb6XZHL-f6SXXECcZONDYk';
+
 export const URLS = {
   repo: REPO_URL,
   download: `${REPO_URL}/releases/latest/download/OpenOverlay-win-Setup.exe`,
