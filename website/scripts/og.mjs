@@ -27,7 +27,7 @@ body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: va
 .bg { position: absolute; inset: 0; background: url(data:image/jpeg;base64,${spa}) 30% 55% / cover; }
 .shade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--c-bg) 30%, color-mix(in srgb, var(--c-bg) 55%, transparent) 100%); }
 .c { position: absolute; left: 80px; top: 80px; right: 80px; display: grid; gap: 28px; }
-img { width: 96px; height: 96px; border-radius: 20px; }
+img { width: 104px; height: 104px; }
 h1 { margin: 0; font-size: 76px; line-height: 0.98; color: var(--c-text); font-weight: 700; letter-spacing: -0.01em; }
 h1 span { display: block; color: var(--c-text-2); font-weight: 600; }
 p { margin: 0; display: flex; gap: 16px; align-items: center; font-size: 30px; font-weight: 600; color: var(--c-text-2); }
@@ -53,5 +53,11 @@ for (const t of Object.values(texts)) {
 }
 await browser.close();
 
-await sharp(here('../src/assets/logo-512.png')).resize(180, 180).png({ palette: true, compressionLevel: 9 }).toFile(here('../public/apple-touch-icon.png'));
+// iOS no admite transparencia en el icono: el logo va sobre el fondo de la web, con margen.
+const bg = tokens.match(/--c-bg:\s*([^;\s]+)/)[1];
+const icon = await sharp(here('../src/assets/logo-512.png')).resize(148, 148).toBuffer();
+await sharp({ create: { width: 180, height: 180, channels: 4, background: bg } })
+  .composite([{ input: icon, gravity: 'center' }])
+  .png({ compressionLevel: 9 })
+  .toFile(here('../public/apple-touch-icon.png'));
 console.log('OK: public/og.png, public/og-es.png y public/apple-touch-icon.png');
